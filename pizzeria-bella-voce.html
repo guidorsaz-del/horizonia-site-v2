@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bella Voce — Pizzeria & Trattoria</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--cream:#FBF5EA;--ink:#201410;--mid:#7c6655;--red:#B5361F;--gold:#C0892F;--fh:'Playfair Display',serif;--fb:'DM Sans',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:var(--fb);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}::selection{background:var(--red);color:#fff}
+.wrap{max-width:1240px;margin:0 auto;padding:0 6vw}
+nav{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 6vw;transition:.3s;color:#fff}
+nav.small{padding:.85rem 6vw;background:rgba(251,245,234,.92);backdrop-filter:blur(14px);color:var(--ink);box-shadow:0 1px 0 rgba(32,20,16,.08)}
+.logo{font-family:var(--fh);font-size:1.5rem;font-weight:700;font-style:italic}.logo span{color:var(--red)}
+.nav-links{display:flex;gap:2.4rem}
+.nav-links a{font-size:.8rem;letter-spacing:.13em;text-transform:uppercase;font-weight:500;opacity:.85}
+.nav-links a:hover{opacity:1}
+.nav-cta{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;border:1px solid currentColor;padding:.55rem 1.2rem;border-radius:100px}
+@media(max-width:860px){.nav-links{display:none}}
+/* cinematic hero */
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;color:#fff}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=75&w=1800') center/cover;animation:kb 22s ease-in-out infinite alternate;will-change:transform}
+@keyframes kb{from{transform:scale(1.08) translate(0,0)}to{transform:scale(1.22) translate(-2%,-3%)}}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,12,9,.45),transparent 30%,rgba(20,12,9,.85))}
+.hero-c{position:relative;z-index:2;padding:0 6vw 8vh;max-width:820px}
+.kicker{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:#f3d9a8;font-weight:600;margin-bottom:1.4rem}
+.kicker::before{content:'';width:30px;height:1px;background:#f3d9a8}
+.hero h1{font-family:var(--fh);font-size:clamp(3.4rem,9vw,7rem);line-height:.95;font-weight:700;margin-bottom:1.2rem}
+.hero h1 em{font-style:italic;color:#e9a23c}
+.hero .tag{font-size:1.2rem;color:rgba(255,255,255,.9);font-weight:300;max-width:440px;margin-bottom:2rem}
+.btns{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+.btn{font-weight:600;font-size:.95rem;padding:.95rem 1.9rem;border-radius:100px;transition:transform .2s}
+.btn-r{background:var(--red);color:#fff;box-shadow:0 12px 34px rgba(181,54,31,.4)}.btn-r:hover{transform:translateY(-3px)}
+.btn-o{border:1px solid rgba(255,255,255,.6);color:#fff}.btn-o:hover{background:rgba(255,255,255,.14)}
+.scroll-cue{position:absolute;right:6vw;bottom:8vh;z-index:2;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.8);writing-mode:vertical-rl}
+/* horizontal scroll carte */
+.hsection{position:relative;height:360vh;background:var(--ink);color:var(--cream)}
+.hsticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.hhead{padding:0 6vw;display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem}
+.hhead h2{font-family:var(--fh);font-size:clamp(2rem,4.5vw,3.4rem);font-weight:600}
+.hhead .meta{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#c9b79a}
+.htrack{display:flex;gap:2rem;padding:0 6vw;will-change:transform}
+.panel{position:relative;flex:0 0 auto;width:min(74vw,440px);height:60vh;border-radius:18px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.panel img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.panel:hover img{transform:scale(1.06)}
+.panel::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(20,12,9,.88))}
+.panel .pc{position:absolute;left:0;bottom:0;z-index:2;padding:2rem;color:#fff}
+.panel .pn{font-family:var(--fh);font-style:italic;color:#e9a23c;font-size:1.1rem}
+.panel h3{font-family:var(--fh);font-size:1.8rem;font-weight:600;margin:.2rem 0 .4rem}
+.panel p{font-size:.92rem;color:rgba(255,255,255,.82);max-width:300px}
+.panel .pr{margin-top:.7rem;font-family:var(--fh);font-size:1.2rem}
+.hprog{margin:2.4rem 6vw 0;height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.hprog i{display:block;height:100%;width:20%;background:var(--gold)}
+@media(max-width:860px){.hsection{height:auto}.hsticky{position:static;height:auto;padding:6rem 0}.htrack{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory}.panel{scroll-snap-align:center}.hprog{display:none}}
+/* maison */
+.maison{padding:8rem 0}
+.maison-in{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.maison-in .k{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:1rem}
+.maison-in h2{font-family:var(--fh);font-size:clamp(2rem,4vw,3rem);font-weight:600;margin-bottom:1.2rem}
+.maison-in p{color:var(--mid);margin-bottom:1rem}
+.stats{display:flex;gap:3rem;margin-top:2rem}
+.stat .n{font-family:var(--fh);font-size:2.6rem;font-weight:700;color:var(--red);line-height:1}
+.stat .l{font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mid);margin-top:.4rem}
+.maison-img{border-radius:200px 200px 18px 18px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 40px 80px rgba(32,20,16,.2)}
+.maison-img img{width:100%;height:100%;object-fit:cover}
+@media(max-width:860px){.maison-in{grid-template-columns:1fr;gap:2.5rem}}
+/* contact */
+.band{padding:7rem 6vw;text-align:center;background:var(--cream)}
+.band h2{font-family:var(--fh);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;margin-bottom:1.4rem}
+.band .info{display:flex;justify-content:center;gap:3.5rem;flex-wrap:wrap;margin:2.4rem 0;color:var(--mid)}
+.band .info b{display:block;color:var(--ink);font-weight:600;font-family:var(--fh);font-size:1.15rem;margin-top:.3rem}
+.band .info span{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase}
+footer{padding:2.5rem 6vw;border-top:1px solid rgba(32,20,16,.12);text-align:center;color:var(--mid);font-size:.85rem}
+.tag-demo{position:fixed;bottom:14px;left:14px;z-index:99;background:var(--ink);color:var(--cream);font-size:.71rem;padding:.45rem .85rem;border-radius:100px}.tag-demo b{color:#fff}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="logo">Bella<span>Voce</span></div>
+  <div class="nav-links"><a href="#carte">La carte</a><a href="#maison">La maison</a><a href="#contact">Nous trouver</a></div>
+  <a href="#contact" class="nav-cta">Réserver</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-c">
+    <span class="kicker">Trattoria · feu de bois</span>
+    <h1>Bella <em>Voce</em></h1>
+    <p class="tag">Les vraies saveurs d'Italie, cuites au feu de bois. Comme à la maison, là-bas.</p>
+    <div class="btns"><a href="#contact" class="btn btn-r">Réserver une table</a><a href="#carte" class="btn btn-o">Voir la carte</a></div>
+  </div>
+  <div class="scroll-cue">défiler</div>
+</header>
+
+<section class="hsection" id="carte">
+  <div class="hsticky">
+    <div class="hhead"><h2>La carte</h2><span class="meta">Faites défiler →</span></div>
+    <div class="htrack" id="htrack">
+      <article class="panel"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=72&w=700" alt=""><div class="pc"><div class="pn">01</div><h3>Pizzas au feu de bois</h3><p>Pâte levée 48 heures, cuite en 90 secondes.</p><div class="pr">dès 18.–</div></div></article>
+      <article class="panel"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=72&w=700" alt=""><div class="pc"><div class="pn">02</div><h3>Pâtes fraîches</h3><p>Tagliatelles, raviolis, gnocchis préparés chaque matin.</p><div class="pr">dès 21.–</div></div></article>
+      <article class="panel"><img src="https://images.unsplash.com/photo-1593504049359-74330189a345?auto=format&fit=crop&q=72&w=700" alt=""><div class="pc"><div class="pn">03</div><h3>Antipasti</h3><p>Burrata des Pouilles, charcuterie italienne, légumes grillés.</p><div class="pr">dès 9.–</div></div></article>
+      <article class="panel"><img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&q=72&w=700" alt=""><div class="pc"><div class="pn">04</div><h3>Dolci</h3><p>Tiramisu, panna cotta et glaces maison.</p><div class="pr">dès 8.–</div></div></article>
+      <article class="panel"><img src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&q=72&w=700" alt=""><div class="pc"><div class="pn">05</div><h3>La cave</h3><p>Vins italiens choisis, au verre ou à la bouteille.</p><div class="pr">dès 6.–</div></div></article>
+    </div>
+    <div class="hprog"><i id="hprog"></i></div>
+  </div>
+</section>
+
+<section class="maison wrap" id="maison">
+  <div class="maison-in">
+    <div class="reveal">
+      <div class="k">La maison</div>
+      <h2>La passion de l'Italie, dans l'assiette</h2>
+      <p>Sauce San Marzano, mozzarella fondante, produits de saison. On cuisine avec le cœur, comme une nonna.</p>
+      <p>Une trattoria chaleureuse où l'on prend le temps. Rien de compliqué, juste du bon.</p>
+      <div class="stats">
+        <div class="stat"><div class="n"><span class="count" data-v="48" data-s="h">0</span></div><div class="l">Pâte levée</div></div>
+        <div class="stat"><div class="n"><span class="count" data-v="100" data-s="%">0</span></div><div class="l">Fait maison</div></div>
+        <div class="stat"><div class="n"><span class="count" data-v="4.9" data-s="">0</span></div><div class="l">Note / 5</div></div>
+      </div>
+    </div>
+    <div class="maison-img reveal"><img src="https://images.unsplash.com/photo-1481931098730-318b6f776db0?auto=format&fit=crop&q=72&w=760" alt="Bella Voce"></div>
+  </div>
+</section>
+
+<section class="band" id="contact">
+  <span class="kicker" style="justify-content:center;color:var(--red)">Nous trouver</span>
+  <h2>Une table vous attend</h2>
+  <div class="info">
+    <div><span>Horaires</span><b>Mar–Dim · 11h30–14h · 18h–22h</b></div>
+    <div><span>Adresse</span><b>Place Centrale 5, Valais</b></div>
+    <div><span>Réservation</span><b>+41 27 000 00 00</b></div>
+  </div>
+  <a href="#" class="btn btn-r">Réserver une table</a>
+</section>
+
+<footer>© 2026 Bella Voce · Pizzeria &amp; Trattoria · Valais, Suisse</footer>
+<div class="tag-demo">Site de démonstration réalisé par <b>Horizon IA</b></div>
+
+<script>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('small',scrollY>40));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*0.08)+'s';io.observe(el)});
+const ioc=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,raw=el.dataset.v,dec=raw.indexOf('.')>=0,t=parseFloat(raw),s=el.dataset.s||'',t0=performance.now();(function r(n){const p=Math.min((n-t0)/1500,1),v=t*(1-Math.pow(1-p,3));el.textContent=(dec?v.toFixed(1):Math.round(v))+s;if(p<1)requestAnimationFrame(r)})(t0);ioc.unobserve(el)}),{threshold:.6});
+document.querySelectorAll('.count').forEach(el=>ioc.observe(el));
+/* scroll horizontal de la carte */
+(function(){
+  const sec=document.getElementById('carte'),track=document.getElementById('htrack'),prog=document.getElementById('hprog');
+  if(!sec||!track)return;
+  function onScroll(){
+    const rect=sec.getBoundingClientRect(),vh=innerHeight;
+    const total=sec.offsetHeight-vh;
+    let p=(-rect.top)/total;p=Math.max(0,Math.min(1,p));
+    const max=track.scrollWidth-innerWidth+ (innerWidth*0.12);
+    track.style.transform='translateX('+(-p*Math.max(0,max))+'px)';
+    if(prog)prog.style.width=(20+p*80)+'%';
+  }
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+})();
+</script>
+</body>
+</html>
