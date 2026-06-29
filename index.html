@@ -431,7 +431,6 @@ footer{background:#070512;color:#8e88b5;padding:54px 0 30px}
       <div class="contact-side">
         <ul class="reach-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:guillaume@horizonia.ch">guillaume@horizonia.ch</a></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 2 .7 2.9a2 2 0 01-.4 2.1L8.1 9.9a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.4c.9.3 1.9.6 2.9.7a2 2 0 011.7 2z"/></svg><a href="tel:+41793840332">079 384 03 32</a></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.3-7-11a7 7 0 0114 0c0 5.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Martigny, Valais — Suisse</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Réponse sous 24h, jours ouvrés</span></li>
         </ul>
@@ -474,7 +473,7 @@ footer{background:#070512;color:#8e88b5;padding:54px 0 30px}
     </div>
     <div class="foot-meta">
       <span>© <span id="yr"></span> Horizon IA · Studio web indépendant · Martigny, Valais</span>
-      <span>guillaume@horizonia.ch · 079 384 03 32</span>
+      <span>guillaume@horizonia.ch</span>
     </div>
   </div>
 </footer>
@@ -544,7 +543,7 @@ cform.addEventListener('submit',async(e)=>{
       formMsg.className='form-msg err';
     }
   }catch(_){
-    formMsg.textContent="Pas de connexion ? Écrivez-moi à guillaume@horizonia.ch ou au 079 384 03 32.";
+    formMsg.textContent="Pas de connexion ? Écrivez-moi directement à guillaume@horizonia.ch.";
     formMsg.className='form-msg err';
   }
   btn.disabled=false; btn.innerHTML=old;
