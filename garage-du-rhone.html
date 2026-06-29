@@ -7,12 +7,6 @@
 <meta name="description" content="Garage & carrosserie toutes marques. Mécanique, carrosserie, peinture, pneus. Devis clair avant toute intervention. Comme neuve, garanti.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script type="importmap">
-{ "imports": {
-  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-}}
-</script>
 <style>
 :root{
   --bg:#0c0d10;--bg2:#131519;--panel:#181b21;--red:#e0352b;--red-d:#bf271e;
@@ -39,27 +33,22 @@ nav.scrolled{background:rgba(12,13,16,.94);backdrop-filter:blur(12px);padding:10
 .nav-links a{font-family:'Saira';font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;color:#cfd5dd;font-weight:500;transition:.2s}.nav-links a:hover{color:var(--red)}
 .burger{display:none;flex-direction:column;gap:5px;cursor:pointer}.burger span{width:25px;height:2px;background:#fff}
 
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
-  background:radial-gradient(60% 60% at 72% 50%,rgba(224,53,43,.14),transparent 60%),linear-gradient(160deg,#15171c 0%,#0c0d10 60%,#070809 100%)}
-.hero-bg::after{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1705563666935-4d0a72709948?w=1600&auto=format&fit=crop&q=80') center/cover;opacity:.14;z-index:0}
-#c3d{position:absolute;inset:0;z-index:1;width:100%;height:100%}
+/* ---------- HERO photo plein écran ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:url('https://images.unsplash.com/photo-1697908833194-e29be25dea12?w=1900&auto=format&fit=crop&q=80') center/cover}
+.hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(70% 80% at 70% 50%,rgba(224,53,43,.16),transparent 60%),linear-gradient(90deg,rgba(8,9,11,.95) 0%,rgba(8,9,11,.7) 45%,rgba(8,9,11,.25) 80%)}
 .hero-in{position:relative;z-index:3;max-width:600px}
-.hero h1{font-size:clamp(3rem,7vw,5.6rem);margin:20px 0 18px;font-weight:800}
+.hero h1{font-size:clamp(3rem,7.4vw,6rem);margin:20px 0 18px;font-weight:800}
 .hero h1 span{color:var(--red)}
-.hero p{font-size:1.14rem;color:#d3d8df;max-width:470px;font-weight:300}
+.hero p{font-size:1.14rem;color:#d3d8df;max-width:480px;font-weight:300}
 .hero .btns{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
-.config{margin-top:34px}
-.config .lbl{font-family:'Saira';font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#8e96a2;margin-bottom:10px}
-.sw-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-.sw-grp{display:flex;gap:8px;align-items:center}
-.sw-grp .t{font-size:.74rem;color:#8e96a2;margin-right:2px}
-.sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.25);transition:.2s}
-.sw:hover{transform:scale(1.12)}.sw.on{border-color:#fff;box-shadow:0 0 0 3px rgba(224,53,43,.4)}
 .scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;color:#9aa2ae;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7;font-family:'Saira'}
 
-.strip{background:var(--red);position:relative;z-index:4}
-.strip .wrap{display:flex;flex-wrap:wrap;justify-content:space-around;gap:16px;padding:20px 28px}
-.strip .it{font-family:'Saira';color:#fff;font-weight:600;font-size:.95rem;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:9px}
+/* ---------- KPI compteurs animés (signature) ---------- */
+.kpi{background:var(--red);position:relative;z-index:4}
+.kpi .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:38px 28px;text-align:center}
+.kpi .k .v{font-family:'Saira';font-weight:800;font-size:2.7rem;color:#fff;line-height:1}
+.kpi .k .l{font-family:'Saira';font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#ffd9d4;margin-top:6px}
 
 section{padding:112px 0;position:relative}
 .sec-head{max-width:640px;margin-bottom:50px}.sec-head.c{margin:0 auto 54px;text-align:center}
@@ -76,15 +65,24 @@ section{padding:112px 0;position:relative}
 .ba{background:var(--bg2)}
 .ba-wrap{position:relative;max-width:980px;margin:0 auto;border-radius:8px;overflow:hidden;aspect-ratio:16/8;user-select:none;cursor:ew-resize;border:1px solid var(--line)}
 .ba-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ba-after{filter:grayscale(1) brightness(.65) contrast(1.05)}
+.ba-after{filter:grayscale(1) brightness(.62) contrast(1.05)}
 .ba-before{clip-path:inset(0 50% 0 0)}
 .ba-line{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--red);z-index:3;pointer-events:none}
 .ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--red);z-index:4;display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.5)}
 .ba-tag{position:absolute;top:14px;z-index:3;font-family:'Saira';font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.55);padding:5px 12px;border-radius:30px;color:#fff}
 .ba-tag.l{left:14px}.ba-tag.r{right:14px;color:var(--red)}
 
-.shop{position:relative;color:var(--cream);text-align:center;min-height:520px;display:flex;align-items:center;
-  background:linear-gradient(rgba(8,9,11,.62),rgba(8,9,11,.74)),url('https://images.unsplash.com/photo-1618312980096-873bd19759a0?w=1600&auto=format&fit=crop&q=80') center/cover fixed}
+/* ---------- PROCESS numéroté (signature) ---------- */
+.proc{background:var(--bg)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:s}
+.step{position:relative;padding-top:26px;border-top:2px solid var(--line);transition:border-color .4s}
+.step:hover{border-color:var(--red)}
+.step .no{font-family:'Saira';font-weight:800;font-size:1rem;color:var(--red);letter-spacing:.1em}
+.step h3{font-size:1.3rem;margin:14px 0 8px}
+.step p{font-size:.92rem;color:var(--muted)}
+
+.shop{position:relative;color:var(--cream);text-align:center;min-height:540px;display:flex;align-items:center;
+  background:linear-gradient(rgba(8,9,11,.66),rgba(8,9,11,.8)),url('https://images.unsplash.com/photo-1676018366904-c083ed678e60?w=1700&auto=format&fit=crop&q=80') center/cover fixed}
 .shop h2{font-size:clamp(2.2rem,5vw,3.5rem);max-width:720px;margin:16px auto 16px}
 .shop p{max-width:560px;margin:0 auto 26px;color:#d3d8df;font-weight:300}
 
@@ -99,9 +97,9 @@ footer .made{margin-top:13px;font-size:.78rem;color:#646c79}footer .made a{color
 
 @media(max-width:900px){
   .nav-links{position:fixed;inset:0 0 0 auto;width:78%;max-width:320px;background:var(--bg2);flex-direction:column;justify-content:center;transform:translateX(100%);transition:.4s}.nav-links.open{transform:none}.burger{display:flex}
-  .svc-grid{grid-template-columns:1fr 1fr}.shop{background-attachment:scroll}section{padding:80px 0}
+  .svc-grid,.steps{grid-template-columns:1fr 1fr}.kpi .wrap{grid-template-columns:1fr 1fr;gap:28px}.shop{background-attachment:scroll}section{padding:80px 0}
 }
-@media(max-width:560px){.svc-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.svc-grid,.steps{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}*{animation:none!important}}
 </style>
 </head>
@@ -109,38 +107,27 @@ footer .made{margin-top:13px;font-size:.78rem;color:#646c79}footer .made a{color
 <div class="demo-badge">Démo réalisée par <b>Horizon IA</b></div>
 <nav id="nav"><div class="wrap nav-in">
   <a href="#hero" class="brand">Garage du <span>Rhône</span></a>
-  <div class="nav-links" id="navlinks"><a href="#services">Services</a><a href="#ba">Avant / Après</a><a href="#shop">L'atelier</a><a href="#contact">Devis</a></div>
+  <div class="nav-links" id="navlinks"><a href="#services">Services</a><a href="#ba">Avant / Après</a><a href="#proc">Notre méthode</a><a href="#contact">Devis</a></div>
   <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </div></nav>
 
 <header class="hero" id="hero">
-  <div class="hero-bg"></div><canvas id="c3d"></canvas>
+  <div class="hero-bg"></div>
   <div class="wrap hero-in">
     <span class="eyebrow">Garage · Carrosserie · Toutes marques</span>
     <h1>Comme neuve.<br><span>Garanti.</span></h1>
     <p>Mécanique, carrosserie, peinture, pneus. Un devis clair avant toute intervention, un travail soigné, et votre voiture qui repart comme au premier jour.</p>
-    <div class="config">
-      <div class="lbl">Configurez la jante &nbsp;›</div>
-      <div class="sw-row">
-        <div class="sw-grp"><span class="t">Finition</span>
-          <span class="sw on" data-rim="0xdfe4ea" data-rm="0.22" title="Argent" style="background:#dfe4ea"></span>
-          <span class="sw" data-rim="0x1a1c20" data-rm="0.35" title="Noir mat" style="background:#1a1c20"></span>
-          <span class="sw" data-rim="0xb87333" data-rm="0.28" title="Bronze" style="background:#b87333"></span>
-        </div>
-        <div class="sw-grp"><span class="t">Étrier</span>
-          <span class="sw cal on" data-cal="0xe0352b" title="Rouge" style="background:#e0352b"></span>
-          <span class="sw cal" data-cal="0xf2b900" title="Jaune" style="background:#f2b900"></span>
-          <span class="sw cal" data-cal="0x2f7de0" title="Bleu" style="background:#2f7de0"></span>
-        </div>
-      </div>
-    </div>
-    <div class="btns" style="margin-top:26px"><a href="#contact" class="btn btn-red">Demander un devis</a><a href="#services" class="btn btn-line">Nos services</a></div>
+    <div class="btns"><a href="#contact" class="btn btn-red">Demander un devis</a><a href="#services" class="btn btn-line">Nos services</a></div>
   </div>
   <div class="scroll-hint">Faire défiler</div>
 </header>
 
-<div class="strip"><div class="wrap">
-  <div class="it">🔧 Mécanique toutes marques</div><div class="it">🎨 Carrosserie & peinture</div><div class="it">🛞 Pneus & jantes</div><div class="it">📋 Devis clair & gratuit</div>
+<!-- KPI compteurs animés -->
+<div class="kpi" id="kpi"><div class="wrap">
+  <div class="k"><div class="v" data-to="25" data-suf="">0</div><div class="l">Ans d'expérience</div></div>
+  <div class="k"><div class="v" data-to="8000" data-suf="+">0</div><div class="l">Véhicules réparés</div></div>
+  <div class="k"><div class="v" data-to="49" data-div="10" data-suf="/5">0</div><div class="l">Note clients Google</div></div>
+  <div class="k"><div class="v" data-to="48" data-suf="h">0</div><div class="l">Délai moyen</div></div>
 </div></div>
 
 <section id="services">
@@ -157,13 +144,26 @@ footer .made{margin-top:13px;font-size:.78rem;color:#646c79}footer .made a{color
 
 <section class="ba" id="ba">
   <div class="wrap">
-    <div class="sec-head c"><span class="eyebrow">Avant / Après</span><h2>La différence se voit</h2><p>Glissez le curseur. À gauche l'état d'origine, à droite après notre passage.</p></div>
-    <div class="ba-wrap" id="ba">
-      <img class="ba-after" src="https://images.unsplash.com/photo-1654157925394-4b7809721149?w=1300&auto=format&fit=crop&q=82" alt="">
-      <img class="ba-before" id="baBefore" src="https://images.unsplash.com/photo-1654157925394-4b7809721149?w=1300&auto=format&fit=crop&q=82" alt="">
+    <div class="sec-head c"><span class="eyebrow" style="justify-content:center">Avant / Après</span><h2>La différence se voit</h2><p>Glissez le curseur. À gauche l'état d'origine, à droite après notre passage.</p></div>
+    <div class="ba-wrap" id="baWrap">
+      <img class="ba-after" src="https://images.unsplash.com/photo-1532268116505-8c59cc37d2e6?w=1300&auto=format&fit=crop&q=82" alt="">
+      <img class="ba-before" id="baBefore" src="https://images.unsplash.com/photo-1532268116505-8c59cc37d2e6?w=1300&auto=format&fit=crop&q=82" alt="">
       <span class="ba-tag l">Avant</span><span class="ba-tag r">Après</span>
       <div class="ba-line" id="baLine"></div>
       <div class="ba-handle" id="baHandle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS numéroté -->
+<section class="proc" id="proc">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Notre méthode</span><h2>Du diagnostic à la remise des clés</h2><p>Une façon de travailler claire, sans surprise, pensée pour vous mettre en confiance.</p></div>
+    <div class="steps">
+      <div class="step reveal"><div class="no">01</div><h3>Diagnostic</h3><p>On inspecte votre véhicule et on identifie précisément ce qu'il faut faire.</p></div>
+      <div class="step reveal"><div class="no">02</div><h3>Devis clair</h3><p>Un devis détaillé et gratuit. Rien n'est lancé sans votre accord.</p></div>
+      <div class="step reveal"><div class="no">03</div><h3>Réparation</h3><p>Des techniciens diplômés, des pièces de qualité, un travail soigné.</p></div>
+      <div class="step reveal"><div class="no">04</div><h3>Contrôle & remise</h3><p>On vérifie tout, on vous explique, et votre voiture repart comme neuve.</p></div>
     </div>
   </div>
 </section>
@@ -179,7 +179,7 @@ footer .made{margin-top:13px;font-size:.78rem;color:#646c79}footer .made a{color
 
 <section class="contact" id="contact">
   <div class="wrap">
-    <div class="sec-head c"><span class="eyebrow">Devis gratuit</span><h2>Parlons de votre voiture</h2></div>
+    <div class="sec-head c"><span class="eyebrow" style="justify-content:center">Devis gratuit</span><h2>Parlons de votre voiture</h2></div>
     <div class="reach">
       <span>Adresse<br><b>Route du Rhône 24, Martigny</b></span>
       <span>Horaires<br><b>Lun – Ven · 7h30-18h</b></span>
@@ -201,84 +201,23 @@ burger.addEventListener('click',()=>links.classList.toggle('open'));
 links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
 // avant/après slider
-(function(){const w=document.getElementById('ba'),bf=document.getElementById('baBefore'),ln=document.getElementById('baLine'),hd=document.getElementById('baHandle');
+(function(){const w=document.getElementById('baWrap'),bf=document.getElementById('baBefore'),ln=document.getElementById('baLine'),hd=document.getElementById('baHandle');
  function set(p){p=Math.max(2,Math.min(98,p));bf.style.clipPath=`inset(0 ${100-p}% 0 0)`;ln.style.left=p+'%';hd.style.left=p+'%';}
  let drag=false;const xp=e=>{const r=w.getBoundingClientRect();const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;set(cx/r.width*100);};
  w.addEventListener('pointerdown',e=>{drag=true;xp(e);});addEventListener('pointermove',e=>{if(drag)xp(e);});addEventListener('pointerup',()=>drag=false);
  w.addEventListener('pointermove',e=>{if(!drag&&e.pointerType==='mouse')xp(e);});set(50);})();
 
-// ===== SIGNATURE 3D : jante alliage métallique + configurateur =====
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const weak=innerWidth<820||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
-if(!reduce && !weak){
- Promise.all([import('three'),import('three/addons/environments/RoomEnvironment.js')]).then(([THREE,RE])=>{
-  try{
-   const canvas=document.getElementById('c3d'),hero=document.getElementById('hero');
-   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-   const W=()=>innerWidth,H=()=>hero.clientHeight;renderer.setSize(W(),H());
-   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
-   const scene=new THREE.Scene();
-   const pmrem=new THREE.PMREMGenerator(renderer);
-   scene.environment=pmrem.fromScene(new RE.RoomEnvironment(renderer),0.04).texture;
-   const camera=new THREE.PerspectiveCamera(42,W()/H(),0.1,100);camera.position.set(0,0,10);
-   const wheel=new THREE.Group();wheel.position.set(4.6,0,0);wheel.scale.setScalar(0.92);scene.add(wheel);
-   const rimMat=new THREE.MeshStandardMaterial({color:0xdfe4ea,metalness:1,roughness:0.22,envMapIntensity:1.5});
-   const calMat=new THREE.MeshStandardMaterial({color:0xe0352b,metalness:0.4,roughness:0.4,envMapIntensity:1});
-   const rubber=new THREE.MeshStandardMaterial({color:0x14151a,metalness:0.1,roughness:0.85});
-   const darkMetal=new THREE.MeshStandardMaterial({color:0x3a3e46,metalness:1,roughness:0.4,envMapIntensity:1});
-   // pneu
-   const tire=new THREE.Mesh(new THREE.TorusGeometry(2.0,0.58,24,72),rubber);wheel.add(tire);
-   // disque de frein (derrière)
-   const disc=new THREE.Mesh(new THREE.CylinderGeometry(1.25,1.25,0.12,48),darkMetal);disc.rotation.x=Math.PI/2;disc.position.z=-0.35;wheel.add(disc);
-   // étrier (configurable)
-   const caliper=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.9,0.5),calMat);caliper.position.set(-1.05,0.2,-0.35);wheel.add(caliper);
-   // barillet de jante
-   const barrel=new THREE.Mesh(new THREE.CylinderGeometry(1.62,1.62,0.85,48,1,true),rimMat);barrel.rotation.x=Math.PI/2;wheel.add(barrel);
-   // lèvre chromée
-   const lip=new THREE.Mesh(new THREE.TorusGeometry(1.62,0.13,18,64),rimMat);lip.position.z=0.42;wheel.add(lip);
-   // moyeu
-   const hub=new THREE.Mesh(new THREE.CylinderGeometry(0.45,0.45,0.5,32),rimMat);hub.rotation.x=Math.PI/2;hub.position.z=0.25;wheel.add(hub);
-   const hubCap=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,0.06,24),calMat);hubCap.rotation.x=Math.PI/2;hubCap.position.z=0.52;wheel.add(hubCap);
-   // rayons (5 doubles branches)
-   const spokeMat=rimMat;
-   for(let i=0;i<5;i++){const a=i/5*Math.PI*2;
-     const s=new THREE.Mesh(new THREE.BoxGeometry(0.32,1.35,0.4),spokeMat);
-     s.position.set(Math.cos(a)*0.85,Math.sin(a)*0.85,0.28);s.rotation.z=a-Math.PI/2;wheel.add(s);
-     const s2=new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.09,0.5,12),spokeMat);
-     s2.position.set(Math.cos(a+0.16)*1.3,Math.sin(a+0.16)*1.3,0.3);wheel.add(s2);
-   }
-   // lumières
-   const key=new THREE.DirectionalLight(0xffffff,2.4);key.position.set(4,6,6);scene.add(key);
-   const rimL=new THREE.DirectionalLight(0xff5a4a,1.4);rimL.position.set(-6,-2,2);scene.add(rimL);
-   scene.add(new THREE.AmbientLight(0x44484f,0.5));
-   // étincelles / particules
-   const N=120,pg=new THREE.BufferGeometry(),pp=new Float32Array(N*3);
-   for(let i=0;i<N;i++){pp[i*3]=(Math.random()-.5)*16;pp[i*3+1]=(Math.random()-.5)*12;pp[i*3+2]=(Math.random()-.5)*6-1;}
-   pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
-   const sparks=new THREE.Points(pg,new THREE.PointsMaterial({color:0xff7a5a,size:0.04,transparent:true,opacity:.5,depthWrite:false}));scene.add(sparks);
-   // configurateur
-   document.querySelectorAll('.sw[data-rim]').forEach(b=>b.addEventListener('click',()=>{
-     document.querySelectorAll('.sw[data-rim]').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-     rimMat.color.setHex(parseInt(b.dataset.rim));rimMat.roughness=parseFloat(b.dataset.rm);}));
-   document.querySelectorAll('.sw.cal').forEach(b=>b.addEventListener('click',()=>{
-     document.querySelectorAll('.sw.cal').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-     calMat.color.setHex(parseInt(b.dataset.cal));}));
-   let mx=0,my=0,cmx=0,cmy=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
-   const clock=new THREE.Clock();let raf;
-   function loop(){raf=requestAnimationFrame(loop);const t=clock.getElapsedTime();
-     cmx+=(mx-cmx)*.05;cmy+=(my-cmy)*.05;
-     wheel.rotation.z=t*0.6;wheel.rotation.y=-0.25+cmx*0.5;wheel.rotation.x=cmy*0.4;wheel.position.y=Math.sin(t*0.8)*0.1;
-     const a=sparks.geometry.attributes.position.array;for(let i=0;i<N;i++){a[i*3]-=0.02;if(a[i*3]<-8)a[i*3]=8;}sparks.geometry.attributes.position.needsUpdate=true;
-     const cxp=1.6+cmx*0.5;camera.position.x=cxp;camera.lookAt(cxp,0,0);
-     renderer.render(scene,camera);}
-   loop();
-   addEventListener('resize',()=>{renderer.setSize(W(),H());camera.aspect=W()/H();camera.updateProjectionMatrix();});
-   new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!raf)loop();}else{cancelAnimationFrame(raf);raf=0;}})).observe(hero);
-  }catch(e){console.warn('3D off',e);}
- }).catch(()=>{});
-}
+// compteurs animés (signature)
+(function(){const kpi=document.getElementById('kpi');let done=false;
+ function run(){done=true;document.querySelectorAll('.kpi .v').forEach(el=>{
+   const to=+el.dataset.to,div=+(el.dataset.div||1),suf=el.dataset.suf||'';const dur=1500;const t0=performance.now();
+   function step(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);const val=to*e/div;
+     el.textContent=(div>1?val.toFixed(1):Math.round(val))+suf;if(p<1)requestAnimationFrame(step);}
+   requestAnimationFrame(step);});}
+ new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!done)run();}),{threshold:.4}).observe(kpi);
+})();
 </script>
 </body>
 </html>
