@@ -7,12 +7,6 @@
 <meta name="description" content="Domaine familial. Des vins de caractère, vinifiés avec patience, qui racontent leur coteau. Découvrez nos cuvées, le chai et nos dégustations.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script type="importmap">
-{ "imports": {
-  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-}}
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
@@ -47,7 +41,13 @@ a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
   animation:grain .5s steps(4) infinite}
 @keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-12px,8px)}50%{transform:translate(10px,-10px)}75%{transform:translate(-8px,-6px)}100%{transform:translate(8px,10px)}}
 .vignette{position:fixed;inset:0;z-index:55;pointer-events:none;box-shadow:inset 0 0 220px 60px rgba(8,2,4,.9)}
-#c3d{position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
+.photo-stage{position:fixed;top:0;right:0;height:100vh;width:52vw;z-index:1;pointer-events:none;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,transparent 12%,#000 46%);
+          mask-image:linear-gradient(to right,transparent 0%,transparent 12%,#000 46%);}
+.ps-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.05);transition:opacity 1.1s ease,transform 7s ease;will-change:opacity,transform}
+.ps-img.on{opacity:1;transform:scale(1.12)}
+.ps-grad{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,rgba(18,4,7,.9),rgba(18,4,7,.2) 42%,transparent 62%),radial-gradient(130% 100% at 78% 50%,transparent 42%,rgba(8,2,4,.62))}
+.ps-cap{position:absolute;right:40px;bottom:42px;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-l);opacity:.85;font-weight:600}
 
 /* ---------- progress + cursor ---------- */
 .prog{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-l));z-index:120;box-shadow:0 0 12px rgba(231,205,134,.6)}
@@ -159,6 +159,9 @@ footer .made a{color:var(--gold)}
   .cu-track{flex-wrap:nowrap;overflow-x:auto;padding:0 32px 18px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
   .cuvee{scroll-snap-align:center}
   .grain{display:none}
+  .photo-stage{width:100vw;-webkit-mask-image:none;mask-image:none;opacity:.5}
+  .ps-grad{background:rgba(18,4,7,.72)}
+  .ps-cap{display:none}
 }
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}*{animation:none!important}}
 </style>
@@ -166,7 +169,16 @@ footer .made a{color:var(--gold)}
 <body>
 <div class="bg-fixed"></div>
 <div class="bg-photo"></div>
-<canvas id="c3d"></canvas>
+<div class="photo-stage" id="photoStage" aria-hidden="true">
+  <div class="ps-img on" data-ps="0" style="background-image:url('assets/wine/photos/grappe.jpg')"></div>
+  <div class="ps-img" data-ps="1" style="background-image:url('assets/wine/photos/vendange.jpg')"></div>
+  <div class="ps-img" data-ps="2" style="background-image:url('assets/wine/photos/pressage.jpg')"></div>
+  <div class="ps-img" data-ps="3" style="background-image:url('assets/wine/photos/barrique.jpg')"></div>
+  <div class="ps-img" data-ps="4" style="background-image:url('assets/wine/photos/bouteille.jpg')"></div>
+  <div class="ps-img" data-ps="5" style="background-image:url('assets/wine/photos/verre.jpg')"></div>
+  <div class="ps-grad"></div>
+  <div class="ps-cap" id="psCap"></div>
+</div>
 <div class="vignette"></div>
 <div class="grain"></div>
 <div class="prog" id="prog"></div>
@@ -422,191 +434,25 @@ function setupMarquee(){
   requestAnimationFrame(tick);
 }
 
-/* ===================== 3D : MÉTAMORPHOSE pilotée au scroll =====================
-   La grappe de raisin se transforme, section après section, jusqu'à la bouteille
-   et le verre : raisin -> vendange -> pressage -> barrique -> bouteille -> verre.
-   Objet en zone droite fixe, jamais derrière le texte. Désactivé sur mobile. */
-const weak=innerWidth<820||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
-const forcedStage=new URLSearchParams(location.search).get('stage');
-
-if(!reduce && !weak){
- Promise.all([import('three'),import('three/addons/loaders/GLTFLoader.js'),import('three/addons/loaders/RGBELoader.js')]).then(([THREE,GL,RG])=>{
-  try{
-   const GLTFLoader=GL.GLTFLoader,RGBELoader=RG.RGBELoader;
-   const canvas=document.getElementById('c3d');
-   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-   const W=()=>innerWidth,H=()=>innerHeight;
-   renderer.setSize(W(),H());renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=0.9;renderer.outputColorSpace=THREE.SRGBColorSpace;
-   const scene=new THREE.Scene();
-   const camera=new THREE.PerspectiveCamera(38,W()/H(),0.01,100);camera.position.set(0,0,12);
-   const holder=new THREE.Group();scene.add(holder);
-   const key=new THREE.DirectionalLight(0xfff0d8,1.35);key.position.set(4,6,5);scene.add(key);
-   const back=new THREE.DirectionalLight(0xffc090,1.9);back.position.set(-5,3,-4);scene.add(back);
-   scene.add(new THREE.AmbientLight(0x5a303a,.4));
-
-   // ---------- gold dust + transition veil ----------
-   const N=240,pg=new THREE.BufferGeometry(),pp=new Float32Array(N*3);
-   for(let i=0;i<N;i++){pp[i*3]=(Math.random()-.5)*18;pp[i*3+1]=(Math.random()-.5)*13;pp[i*3+2]=(Math.random()-.5)*9-1;}
-   pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
-   const dustMat=new THREE.PointsMaterial({color:0xe7cd86,size:0.05,transparent:true,opacity:.5,depthWrite:false});
-   const dust=new THREE.Points(pg,dustMat);scene.add(dust);
-   function dustBurst(){if(!window.gsap)return;gsap.fromTo(dustMat,{opacity:.9,size:0.13},{opacity:.5,size:0.05,duration:1.2,ease:'power2.out'});}
-
-   // ---------- shared helpers ----------
-   const texL=new THREE.TextureLoader();
-   function fitInto(wrap,obj,targetH,yoff){
-     const box=new THREE.Box3().setFromObject(obj);const c=box.getCenter(new THREE.Vector3());const sz=box.getSize(new THREE.Vector3());
-     obj.position.sub(c);
-     const inner=new THREE.Group();inner.add(obj);inner.scale.setScalar(targetH/Math.max(sz.y,0.001));inner.position.y=yoff||0;
-     wrap.add(inner);return inner;
-   }
-   function grapeMat(tint){return new THREE.MeshPhysicalMaterial({color:tint,roughness:0.42,metalness:0,transmission:0.14,thickness:0.6,ior:1.36,attenuationColor:0x1a0510,attenuationDistance:0.45,clearcoat:0.6,clearcoatRoughness:0.45,sheen:1.0,sheenColor:0xb7a3c8,sheenRoughness:0.72,envMapIntensity:1.0});}
-   const TINTS=[0x331531,0x281024,0x3a1838,0x1f0c1e,0x44213f,0x2c1228];
-   const GGEO=new THREE.SphereGeometry(1,30,22);
-   function woodCanvas(rep){const cv=document.createElement('canvas');cv.width=1024;cv.height=512;const x=cv.getContext('2d');const planks=18,pw=1024/planks;
-     for(let i=0;i<planks;i++){const base=42+Math.random()*26;x.fillStyle='rgb('+(base+20)+','+(base-6)+','+((base-20)|0)+')';x.fillRect(i*pw,0,pw,512);
-       for(let gln=0;gln<24;gln++){const yy=Math.random()*512;x.strokeStyle='rgba(30,16,8,'+(0.05+Math.random()*0.12)+')';x.lineWidth=0.5+Math.random();x.beginPath();x.moveTo(i*pw,yy);x.bezierCurveTo(i*pw+pw*0.4,yy+(Math.random()-.5)*16,i*pw+pw*0.6,yy+(Math.random()-.5)*16,i*pw+pw,yy);x.stroke();}
-       x.fillStyle='rgba(20,10,4,0.55)';x.fillRect(i*pw-1,0,2,512);}
-     const t=new THREE.CanvasTexture(cv);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rep||3,1);return t;}
-
-   // ---------- STAGE 0 : grappe de raisin ----------
-   function buildGrapes(){
-     const bunch=new THREE.Group();const placed=[];const Hh=4.6,Rmax=1.55,gr=0.52;
-     for(let layer=0;layer<16;layer++){const u=layer/15;const y=0.4-u*Hh;const r0=Rmax*Math.pow(1-u,0.62)+0.12;
-       const per=Math.max(1,Math.round(2*Math.PI*r0/(gr*1.7)));const off=layer*0.6;
-       for(let i=0;i<per;i++){const a=off+i/per*Math.PI*2;const rr=r0*(0.6+Math.random()*0.4);
-         const px=Math.cos(a)*rr+(Math.random()-.5)*0.15,pz=Math.sin(a)*rr+(Math.random()-.5)*0.15,py=y+(Math.random()-.5)*0.4;
-         const s=gr*(0.84+Math.random()*0.3);let ok=true;for(const p of placed){const dx=p.x-px,dy=p.y-py,dz=p.z-pz;if(dx*dx+dy*dy+dz*dz<(s*0.95)*(s*0.95)){ok=false;break;}}if(!ok)continue;
-         placed.push({x:px,y:py,z:pz});const m=new THREE.Mesh(GGEO,grapeMat(TINTS[(Math.random()*TINTS.length)|0]));m.position.set(px,py,pz);m.scale.setScalar(s);m.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);bunch.add(m);}}
-     for(let i=0;i<10;i++){const u=Math.random()*0.7,y=0.4-u*Hh,rr=Rmax*Math.pow(1-u,0.62)*0.35,a=Math.random()*6;const m=new THREE.Mesh(GGEO,grapeMat(TINTS[(Math.random()*TINTS.length)|0]));m.position.set(Math.cos(a)*rr,y,Math.sin(a)*rr);m.scale.setScalar(gr*0.9);bunch.add(m);}
-     const stemMat=new THREE.MeshStandardMaterial({color:0x5a3a1e,roughness:0.8,metalness:0});
-     const stem=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.1,1.0,12),stemMat);stem.position.y=1.0;bunch.add(stem);
-     return bunch;
-   }
-   // ---------- grape pile (for vendange) ----------
-   function buildGrapePile(R,count,gs){const g=new THREE.Group();for(let i=0;i<count;i++){const a=Math.random()*6,rr=Math.sqrt(Math.random())*R;const dome=Math.max(0,1-rr/R)*R*0.45;const m=new THREE.Mesh(GGEO,grapeMat(TINTS[(Math.random()*TINTS.length)|0]));m.position.set(Math.cos(a)*rr,dome+(Math.random()-.3)*gs,Math.sin(a)*rr);m.scale.setScalar(gs*(0.82+Math.random()*0.4));m.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);g.add(m);}return g;}
-
-   // ---------- STAGE 2 : pressage / moût (lagar) ----------
-   function buildPressage(){
-     const g=new THREE.Group();const wt=woodCanvas(3);
-     const wood=new THREE.MeshStandardMaterial({map:wt,roughness:0.82,metalness:0,side:THREE.DoubleSide});
-     const RT=2.7,RB=2.55,Hh=1.5;
-     g.add(new THREE.Mesh(new THREE.CylinderGeometry(RT,RB,Hh,56,1,true),wood));
-     const hoopMat=new THREE.MeshStandardMaterial({color:0x6a6a68,roughness:0.4,metalness:0.9});
-     [[-0.55,RT+0.07],[0.55,RT]].forEach(([y,rad])=>{const h=new THREE.Mesh(new THREE.TorusGeometry(rad*0.985,0.07,12,64),hoopMat);h.rotation.x=Math.PI/2;h.position.y=y;g.add(h);});
-     const bottom=new THREE.Mesh(new THREE.CylinderGeometry(RB,RB,0.12,56),wood);bottom.position.y=-Hh/2;g.add(bottom);
-     const juice=new THREE.MeshPhysicalMaterial({color:0x520a18,roughness:0.08,metalness:0,clearcoat:1,clearcoatRoughness:0.04,transmission:0.06,envMapIntensity:1.4});
-     const js=new THREE.Mesh(new THREE.CircleGeometry(RT-0.06,64),juice);js.rotation.x=-Math.PI/2;js.position.y=0.46;g.add(js);
-     const skinMat=new THREE.MeshPhysicalMaterial({color:0x3a0e24,roughness:0.4,clearcoat:0.7,clearcoatRoughness:0.35,sheen:1,sheenColor:0xa57890,sheenRoughness:0.55});
-     for(let i=0;i<150;i++){const a=Math.random()*6,rr=Math.sqrt(Math.random())*(RT-0.25);const m=new THREE.Mesh(GGEO,skinMat);m.position.set(Math.cos(a)*rr,0.5+Math.random()*0.05,Math.sin(a)*rr);const sc=0.15+Math.random()*0.15;m.scale.set(sc,sc*(0.55+Math.random()*0.3),sc);m.rotation.set(Math.random()*6,Math.random()*6,Math.random()*6);g.add(m);}
-     g.rotation.x=0.46;
-     return g;
-   }
-   // ---------- STAGE 5 : verre de vin ----------
-   function buildVerre(){
-     const g=new THREE.Group();
-     const glass=new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0.03,metalness:0,transmission:0.98,thickness:0.35,ior:1.5,clearcoat:1,clearcoatRoughness:0.04,envMapIntensity:1.5,side:THREE.DoubleSide,transparent:true});
-     const P=[[0.0,0],[1.05,0],[1.06,0.08],[0.85,0.16],[0.10,0.34],[0.085,2.0],[0.10,2.16],[0.55,2.45],[1.05,2.95],[1.30,3.55],[1.28,4.05],[1.10,4.7],[1.0,5.05]];
-     const geo=new THREE.LatheGeometry(P.map(p=>new THREE.Vector2(p[0],p[1])),80);geo.computeVertexNormals();
-     g.add(new THREE.Mesh(geo,glass));
-     const wineMat=new THREE.MeshPhysicalMaterial({color:0x3c0610,roughness:0.18,metalness:0,transmission:0.35,thickness:1.4,ior:1.38,attenuationColor:0x2a050c,attenuationDistance:0.6,envMapIntensity:1.0});
-     const WP=[[0,2.5],[0.62,2.5],[1.02,2.92],[1.20,3.42],[1.19,3.62],[0,3.62]];
-     g.add(new THREE.Mesh(new THREE.LatheGeometry(WP.map(p=>new THREE.Vector2(p[0],p[1])),80),wineMat));
-     return g;
-   }
-   // ---------- bottle label ----------
-   function labelTex(){const cv=document.createElement('canvas');cv.width=1024;cv.height=1024;const x=cv.getContext('2d');
-     x.fillStyle='#f1e7d2';x.fillRect(0,0,1024,1024);x.strokeStyle='#7d1f33';x.lineWidth=10;x.strokeRect(60,60,904,904);x.textAlign='center';x.fillStyle='#7d1f33';
-     x.font='italic 56px Georgia';x.fillText('Cave des',512,300);x.font='600 104px Georgia';x.fillText('COTEAUX',512,410);
-     x.fillStyle='#c9a24b';x.fillRect(360,470,304,4);x.fillStyle='#3a0f1e';x.font='44px Georgia';x.fillText('PIERRE CHAUDE',512,560);
-     x.font='30px Georgia';x.fillStyle='#5a1226';x.fillText('Rouge · Élevé en fût',512,615);x.font='italic 38px Georgia';x.fillStyle='#7d1f33';x.fillText('Millésime 2020',512,720);
-     x.font='25px Georgia';x.fillStyle='#8a6a4a';x.fillText('VALAIS · SUISSE',512,790);
-     const t=new THREE.CanvasTexture(cv);t.colorSpace=THREE.SRGBColorSpace;t.flipY=false;t.wrapS=THREE.RepeatWrapping;t.offset.x=-0.07;return t;}
-
-   // ---------- stage registry ----------
-   const stages=[
-     {name:'grappe',  s:1.00, y:0.0, h:5.0},
-     {name:'vendange',s:1.00, y:0.0, h:4.4},
-     {name:'pressage',s:1.00, y:-0.2, h:3.8},
-     {name:'barrique',s:1.00, y:0.0, h:5.0},
-     {name:'bouteille',s:1.00,y:0.0, h:6.0},
-     {name:'verre',   s:1.00, y:0.0, h:5.4},
-   ];
-   stages.forEach(st=>{st.wrap=new THREE.Group();st.wrap.visible=false;st.wrap.scale.setScalar(0.0001);holder.add(st.wrap);});
-
-   // build procedural stages now
-   fitInto(stages[0].wrap,buildGrapes(),stages[0].h,stages[0].y);
-   fitInto(stages[2].wrap,buildPressage(),stages[2].h,stages[2].y);
-   fitInto(stages[5].wrap,buildVerre(),stages[5].h,stages[5].y);
-
-   // HDRI then models
-   new RGBELoader().load('assets/wine/studio.hdr',(hdr)=>{hdr.mapping=THREE.EquirectangularReflectionMapping;scene.environment=hdr;});
-   const gltf=new GLTFLoader();
-   // STAGE 1 vendange : panier + raisins
-   gltf.load('assets/wine/wicker_basket_01/wicker_basket_01_1k.gltf',(g)=>{
-     const root=g.scene;const box=new THREE.Box3().setFromObject(root);const sz=box.getSize(new THREE.Vector3());const ctr=box.getCenter(new THREE.Vector3());
-     const w=Math.max(sz.x,sz.z);
-     const pile=buildGrapePile(w*0.40, 150, w*0.05);
-     pile.position.set(ctr.x, box.max.y - sz.y*0.16, ctr.z);root.add(pile);
-     fitInto(stages[1].wrap,root,stages[1].h,stages[1].y);
-   },undefined,e=>console.warn('basket',e));
-   // STAGE 3 barrique
-   gltf.load('assets/wine/wine_barrel_01/wine_barrel_01_1k.gltf',(g)=>{fitInto(stages[3].wrap,g.scene,stages[3].h,stages[3].y);},undefined,e=>console.warn('barrel',e));
-   // STAGE 4 bouteille (bordeaux + étiquette)
-   gltf.load('assets/wine/wine_bottles_01_1k.gltf',(g)=>{
-     const root=g.scene;let bottle=null;root.children.slice().forEach(ch=>{if(ch.name.includes('bordeaux'))bottle=ch;});if(!bottle)bottle=root;
-     root.children.slice().forEach(ch=>{if(ch!==bottle)root.remove(ch);});
-     const lab=labelTex();const labMat=new THREE.MeshStandardMaterial({map:lab,roughness:.55,metalness:0,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
-     const fix=(mt)=>{if(!mt||!mt.name)return mt;
-       if(mt.name.includes('wine_light_red')||mt.name.includes('wine_red')){mt.color&&mt.color.set(0x35060f);if('transmission'in mt)mt.transmission=Math.min(mt.transmission||0,.15);mt.roughness=.22;mt.needsUpdate=true;}
-       if(mt.name.includes('glass')){mt.color&&mt.color.set(0x20100a);mt.normalMap=null;if(mt.normalScale)mt.normalScale.set(0,0);mt.roughness=Math.min(mt.roughness||0,0.08);mt.attenuationColor&&mt.attenuationColor.set(0x35080f);if('attenuationDistance'in mt)mt.attenuationDistance=0.4;mt.needsUpdate=true;}
-       return mt;};
-     bottle.traverse(o=>{if(o.isMesh){const arr=Array.isArray(o.material)?o.material:[o.material];const names=arr.map(m=>m&&m.name).join(',');if(names.includes('ftero_vinea_02'))o.material=labMat;else o.material=Array.isArray(o.material)?o.material.map(fix):fix(o.material);}});
-     fitInto(stages[4].wrap,bottle,stages[4].h,stages[4].y);
-   },undefined,e=>console.warn('bottle',e));
-
-   // ---------- stage switching ----------
-   let active=-1;
-   function activate(i){
-     if(i===active||i<0||i>=stages.length)return;active=i;
-     stages.forEach((st,k)=>{if(k!==i&&st.wrap.visible){if(window.gsap)gsap.to(st.wrap.scale,{x:0.0001,y:0.0001,z:0.0001,duration:.45,ease:'power2.in',onComplete:()=>{st.wrap.visible=false;}});else{st.wrap.visible=false;}}});
-     const st=stages[i];st.wrap.visible=true;
-     if(window.gsap)gsap.fromTo(st.wrap.scale,{x:st.s*0.35,y:st.s*0.35,z:st.s*0.35},{x:st.s,y:st.s,z:st.s,duration:.85,ease:'back.out(1.4)'});else st.wrap.scale.setScalar(st.s);
-     dustBurst();
-   }
-   function setupStageTriggers(){
-     if(!hasGSAP)return;
-     document.querySelectorAll('[data-stage]').forEach(sec=>{const idx=+sec.dataset.stage;
-       ScrollTrigger.create({trigger:sec,start:'top 55%',end:'bottom 45%',onEnter:()=>activate(idx),onEnterBack:()=>activate(idx)});});
-   }
-
-   // ---------- loop ----------
-   const baseR=3.4;let mx=0,my=0,cmx=0,cmy=0,spinAcc=0;
-   addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
-   const clock=new THREE.Clock();
-   function loop(){requestAnimationFrame(loop);const dt=Math.min(clock.getDelta(),0.05),t=clock.elapsedTime;
-     cmx+=(mx-cmx)*.05;cmy+=(my-cmy)*.05;spinAcc+=0.18*dt;
-     holder.position.x=baseR+cmx*0.6;holder.position.y=Math.sin(t*0.6)*0.10-cmy*0.35;
-     holder.rotation.y=Math.sin(spinAcc*0.6)*0.32+cmx*0.7;holder.rotation.z=cmy*0.05;
-     dust.rotation.y=t*0.03;const arr=dust.geometry.attributes.position.array;for(let i=0;i<N;i++){arr[i*3+1]+=0.004;if(arr[i*3+1]>6.5)arr[i*3+1]=-6.5;}dust.geometry.attributes.position.needsUpdate=true;
-     const cxp=cmx*0.4;camera.position.x=cxp;camera.lookAt(cxp,0,0);
-     renderer.render(scene,camera);
-   }
-   loop();
-   addEventListener('resize',()=>{renderer.setSize(W(),H());camera.aspect=W()/H();camera.updateProjectionMatrix();if(hasGSAP)ScrollTrigger.refresh();});
-
-   if(forcedStage!==null){activate(+forcedStage);}   // mode test : ?stage=N
-   else{activate(0);setupStageTriggers();}
-  }catch(e){console.warn('3D off',e);}
- }).catch(()=>{});
-}else{
-  document.querySelectorAll('.col,.col.r').forEach(c=>{});
+/* ===================== SÉQUENCE PHOTO pilotée au scroll ===================== */
+function setupPhotoStages(){
+  const imgs=[...document.querySelectorAll('.ps-img')];
+  const cap=document.getElementById('psCap');
+  const CAPS=['La grappe','La vendange','Le pressage',"L'élevage en barrique",'La mise en bouteille','La dégustation'];
+  let cur=-1;
+  function activate(i){if(i===cur||i<0||i>=imgs.length)return;cur=i;imgs.forEach((el,k)=>el.classList.toggle('on',k===i));if(cap)cap.textContent=CAPS[i]||'';}
+  const forced=new URLSearchParams(location.search).get('ps');
+  if(forced!==null){activate(+forced);return;}
+  activate(0);
+  if(hasGSAP){
+    document.querySelectorAll('[data-stage]').forEach(sec=>{const idx=+sec.dataset.stage;
+      ScrollTrigger.create({trigger:sec,start:'top 55%',end:'bottom 45%',onEnter:()=>activate(idx),onEnterBack:()=>activate(idx)});});
+  }
 }
 
 /* init GSAP scroll features after load */
 window.addEventListener('load',()=>{
-  setupMarquee();
+  setupMarquee();setupPhotoStages();
   if(hasGSAP){setupHorizontal();setupParallax();ScrollTrigger.refresh();}
 });
 </script>
