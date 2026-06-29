@@ -3,159 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Institut Lumière — Beauté & Coiffure</title>
-<meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Institut Lumière — Beauté & coiffure · Révélez votre éclat</title>
+<meta name="description" content="Institut de beauté & coiffure. Coupe, couleur, soins du visage, beauté des mains, maquillage. Une parenthèse rien que pour vous. Prenez rendez-vous.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#FCF7F5;--bg2:#F4E7E2;--ink:#332829;--mid:#947f7a;--rose:#BE7589;--gold:#BD9B72;--fh:'Cormorant Garamond',serif;--fb:'DM Sans',sans-serif}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}::selection{background:var(--rose);color:#fff}
-.wrap{max-width:1140px;margin:0 auto;padding:0 6vw}
-.glow{position:fixed;top:0;left:0;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(190,117,137,.22),transparent 65%);transform:translate(-50%,-50%);pointer-events:none;z-index:1;transition:opacity .4s;will-change:transform}
-nav{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:1.6rem 6vw;transition:.3s}
-nav.small{padding:.9rem 6vw;background:rgba(252,247,245,.92);backdrop-filter:blur(14px)}
-.logo{font-family:var(--fh);font-size:1.6rem;font-weight:600}.logo span{color:var(--rose)}
-.nav-links{display:flex;gap:2.6rem}
-.nav-links a{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mid)}.nav-links a:hover{color:var(--ink)}
-.nav-cta{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);border:1px solid var(--rose);padding:.6rem 1.2rem;border-radius:100px;transition:.2s}.nav-cta:hover{background:var(--rose);color:#fff}
-@media(max-width:860px){.nav-links{display:none}}
-/* hero split */
-.hero{position:relative;z-index:2;min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:4rem;padding:120px 6vw 4rem}
-.kicker{display:inline-block;font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);margin-bottom:1.6rem}
-.hero h1{font-family:var(--fh);font-size:clamp(3.2rem,7vw,5.8rem);font-weight:500;line-height:1;margin-bottom:1.3rem}
-.hero h1 em{font-style:italic;color:var(--rose)}
-.hero .tag{font-size:1.18rem;color:var(--mid);font-weight:300;max-width:420px;margin-bottom:2.2rem}
-.btn{display:inline-block;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;background:var(--rose);color:#fff;padding:1rem 2.2rem;border-radius:100px;box-shadow:0 16px 40px rgba(190,117,137,.3);transition:transform .2s}.btn:hover{transform:translateY(-3px)}
-.hero-img{position:relative;border-radius:240px 240px 20px 20px;overflow:hidden;aspect-ratio:3/4;box-shadow:0 50px 90px rgba(51,40,41,.2)}
-.hero-img img{width:100%;height:100%;object-fit:cover}
-@media(max-width:860px){.hero{grid-template-columns:1fr;gap:2.5rem;text-align:center}.kicker{}.hero .tag{margin:0 auto 2rem}.hero-img{max-width:360px;margin:0 auto}}
-/* prestations tabs */
-.presta{position:relative;z-index:2;background:var(--bg2);padding:8rem 0}
-.presta .head{text-align:center;margin-bottom:2.6rem}
-.presta .head .k{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rose)}
-.presta .head h2{font-family:var(--fh);font-size:clamp(2.2rem,4.6vw,3.4rem);font-weight:500;margin-top:.5rem}
-.tabs{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-bottom:2.6rem}
-.tab{font-family:var(--fb);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);background:transparent;border:1px solid rgba(51,40,41,.18);padding:.7rem 1.5rem;border-radius:100px;cursor:pointer;transition:.25s}
-.tab.on{background:var(--rose);color:#fff;border-color:var(--rose)}
-.panel{display:none;max-width:760px;margin:0 auto;animation:fade .5s ease}
-.panel.on{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.prow{display:flex;align-items:baseline;gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgba(51,40,41,.12)}
-.prow .nm{font-size:1.05rem;font-weight:500}.prow .nm small{display:block;color:var(--mid);font-weight:300;font-size:.85rem}
-.prow .ds{flex:1;border-bottom:1px dotted rgba(51,40,41,.3);transform:translateY(-4px)}
-.prow .pr{font-family:var(--fh);font-size:1.3rem;white-space:nowrap}
-/* testimonials carousel */
-.testi{position:relative;z-index:2;padding:8rem 0;text-align:center;overflow:hidden}
-.testi .k{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rose)}
-.tcar{position:relative;max-width:760px;margin:2.5rem auto 0;min-height:200px}
-.slide{position:absolute;inset:0;opacity:0;transition:opacity .6s;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 1rem}
-.slide.on{opacity:1;position:relative}
-.slide .stars{color:var(--gold);letter-spacing:.2em;margin-bottom:1.2rem}
-.slide q{font-family:var(--fh);font-style:italic;font-size:clamp(1.4rem,3vw,2rem);line-height:1.3;color:var(--ink)}
-.slide .who{margin-top:1.4rem;font-size:.86rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mid)}
-.dots{display:flex;justify-content:center;gap:.6rem;margin-top:2.2rem}
-.dot{width:9px;height:9px;border-radius:50%;background:rgba(51,40,41,.2);border:none;cursor:pointer;transition:.2s}.dot.on{background:var(--rose);transform:scale(1.2)}
-/* contact */
-.band{position:relative;z-index:2;padding:8rem 6vw;text-align:center}
-.band h2{font-family:var(--fh);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:500;margin-bottom:1.2rem}
-.band .info{display:flex;justify-content:center;gap:3.5rem;flex-wrap:wrap;margin:2.2rem 0;color:var(--mid)}
-.band .info b{display:block;color:var(--ink);font-family:var(--fh);font-size:1.2rem;margin-top:.3rem;font-weight:600}
-.band .info span{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
-footer{position:relative;z-index:2;padding:2.5rem 6vw;border-top:1px solid rgba(51,40,41,.1);text-align:center;color:var(--mid);font-size:.84rem}
-.tag-demo{position:fixed;bottom:14px;left:14px;z-index:99;background:var(--ink);color:#fff;font-size:.71rem;padding:.45rem .85rem;border-radius:100px}.tag-demo b{color:#fff}
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+:root{
+  --plum:#170f1e;--plum2:#241430;--mauve:#8a6aa0;--rose:#dca0ad;--rosed:#c47f90;
+  --gold:#d9ab7a;--gold-l:#ecc99e;--cream:#f7f0f2;--cream2:#efe6ea;--ink:#2c2230;--muted:#8e8090;
+  --line:rgba(220,160,173,.2);
+}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--plum);color:var(--cream);line-height:1.7;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.disp{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.08}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.eyebrow{font-size:.7rem;letter-spacing:.36em;text-transform:uppercase;color:var(--rose);font-weight:500;display:inline-flex;align-items:center;gap:13px}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--rose)}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 32px;border-radius:40px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:.3s;border:none}
+.btn-rose{background:linear-gradient(100deg,var(--rose),var(--gold));color:#3a222a}.btn-rose:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(220,160,173,.3)}
+.btn-line{border:1px solid rgba(247,240,242,.4);color:var(--cream)}.btn-line:hover{border-color:var(--rose);color:var(--rose)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 0;transition:.4s}
+nav.scrolled{background:rgba(23,15,30,.9);backdrop-filter:blur(12px);padding:13px 0;border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:.04em;color:var(--cream)}
+.brand b{color:var(--rose);font-weight:600}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#ddd0db;transition:.2s}.nav-links a:hover{color:var(--rose)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}.burger span{width:25px;height:1px;background:var(--cream)}
+
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;
+  background:radial-gradient(60% 60% at 72% 45%,rgba(138,106,160,.3),transparent 62%),radial-gradient(50% 40% at 70% 60%,rgba(220,160,173,.18),transparent 64%),linear-gradient(160deg,#1d1228 0%,#170f1e 60%,#100a16 100%)}
+#c3d{position:absolute;inset:0;z-index:1;width:100%;height:100%}
+.hero-in{position:relative;z-index:3;max-width:600px}
+.hero h1{font-size:clamp(3rem,7vw,5.6rem);margin:22px 0 20px;font-weight:500}
+.hero h1 em{font-style:italic;color:var(--gold-l)}
+.hero p{font-size:1.18rem;color:#ece0ea;max-width:460px;font-weight:300}
+.hero .btns{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:#cbbcc8;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7}
+
+.strip{background:var(--plum2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;z-index:4}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:36px 28px;text-align:center}
+.strip .n{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--gold-l)}
+.strip .l{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:#b6a6b6;margin-top:4px}
+
+section{padding:120px 0;position:relative}
+.sec-head{max-width:640px;margin-bottom:54px}.sec-head.c{margin:0 auto 58px;text-align:center}
+.sec-head h2{font-size:clamp(2.4rem,5vw,3.8rem);margin:16px 0 14px}
+.sec-head p{color:var(--muted);font-size:1.05rem}
+.light{background:var(--cream);color:var(--ink)}.light .sec-head p{color:var(--muted)}.light .eyebrow{color:var(--rosed)}
+
+.apropos .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.apropos img{width:100%;height:580px;object-fit:cover;border-radius:4px}
+.apropos p+p{margin-top:16px;color:#6a5f6e}
+.sign{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.7rem;color:var(--rosed);margin-top:22px}
+
+.presta{background:linear-gradient(180deg,#170f1e,#221430)}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:42px}
+.tab{padding:11px 24px;border:1px solid var(--line);border-radius:40px;cursor:pointer;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#c9bac9;transition:.25s;background:none;font-weight:500}
+.tab:hover{border-color:var(--rose);color:var(--rose)}.tab.active{background:linear-gradient(100deg,var(--rose),var(--gold));border-color:transparent;color:#3a222a}
+.plist{max-width:760px;margin:0 auto;display:grid;gap:4px}
+.pi{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:16px 0;border-bottom:1px solid var(--line)}
+.pi .nm{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--cream)}
+.pi .nm small{display:block;font-family:'Jost';font-size:.84rem;color:#a596a5;font-weight:300;letter-spacing:.02em;margin-top:2px}
+.pi .px{font-family:'Cormorant Garamond',serif;color:var(--gold-l);font-size:1.4rem;white-space:nowrap}
+
+.gal{background:var(--cream)}
+.gal-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.gal-grid .g{border-radius:4px;overflow:hidden}
+.gal-grid .g img{width:100%;height:100%;min-height:320px;object-fit:cover;transition:.6s}
+.gal-grid .g:hover img{transform:scale(1.05)}
+
+.contact{background:#100a16;text-align:center}
+.contact .reach{display:flex;gap:44px;justify-content:center;flex-wrap:wrap;margin-top:30px;color:#c9bac9}
+.contact .reach b{color:var(--gold-l);font-family:'Cormorant Garamond';font-weight:500}
+footer{background:#0c0712;color:#8e8090;padding:46px 0 28px;text-align:center;border-top:1px solid var(--line)}
+footer .made{margin-top:13px;font-size:.78rem;color:#6f6273}footer .made a{color:var(--rose)}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.8,.2,1)}.reveal.in{opacity:1;transform:none}
+.demo-badge{position:fixed;left:16px;bottom:14px;z-index:200;font-size:.66rem;color:#c9bac9;background:rgba(23,15,30,.6);border:1px solid var(--line);padding:6px 11px;border-radius:30px;backdrop-filter:blur(6px)}.demo-badge b{color:var(--rose)}
+
+@media(max-width:900px){
+  .nav-links{position:fixed;inset:0 0 0 auto;width:78%;max-width:320px;background:var(--plum2);flex-direction:column;justify-content:center;transform:translateX(100%);transition:.4s}.nav-links.open{transform:none}.burger{display:flex}
+  .apropos .split,.gal-grid{grid-template-columns:1fr;gap:34px}.apropos img{height:400px}.strip .wrap{grid-template-columns:1fr 1fr}section{padding:84px 0}
+}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}*{animation:none!important}}
 </style>
 </head>
 <body>
-<div class="glow" id="glow"></div>
-<nav id="nav">
-  <div class="logo">Institut <span>Lumière</span></div>
-  <div class="nav-links"><a href="#presta">Prestations</a><a href="#testi">Avis</a><a href="#contact">Contact</a></div>
-  <a href="#contact" class="nav-cta">Rendez-vous</a>
-</nav>
+<div class="demo-badge">Démo réalisée par <b>Horizon IA</b></div>
+<nav id="nav"><div class="wrap nav-in">
+  <a href="#hero" class="brand">Institut <b>Lumière</b></a>
+  <div class="nav-links" id="navlinks"><a href="#apropos">L'institut</a><a href="#presta">Prestations</a><a href="#gal">Galerie</a><a href="#contact">Rendez-vous</a></div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</div></nav>
 
-<header class="hero">
-  <div class="reveal">
-    <span class="kicker">Coiffure · soins · bien-être</span>
-    <h1>Une parenthèse de <em>douceur</em></h1>
-    <p class="tag">Prenez un moment rien que pour vous. Soins sur mesure, dans un cadre apaisant.</p>
-    <a href="#contact" class="btn">Prendre rendez-vous</a>
+<header class="hero" id="hero">
+  <canvas id="c3d"></canvas>
+  <div class="wrap hero-in">
+    <span class="eyebrow">Beauté · Coiffure · Soins</span>
+    <h1>Révélez votre <em>éclat</em>.</h1>
+    <p>Coiffure, soins du visage, beauté des mains, maquillage. Une parenthèse rien que pour vous, entre des mains expertes, dans un cadre lumineux et apaisant.</p>
+    <div class="btns"><a href="#contact" class="btn btn-rose">Prendre rendez-vous</a><a href="#presta" class="btn btn-line">Nos prestations</a></div>
   </div>
-  <div class="hero-img reveal"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=75&w=760" alt="Institut Lumière"></div>
+  <div class="scroll-hint">Faire défiler</div>
 </header>
 
+<div class="strip"><div class="wrap">
+  <div><div class="n">Coiffure</div><div class="l">Coupe · couleur · balayage</div></div>
+  <div><div class="n">Soins visage</div><div class="l">Éclat · anti-âge</div></div>
+  <div><div class="n">Onglerie</div><div class="l">Mains & pieds</div></div>
+  <div><div class="n">Maquillage</div><div class="l">Jour · soirée · mariée</div></div>
+</div></div>
+
+<section class="apropos light" id="apropos">
+  <div class="wrap"><div class="split">
+    <div class="reveal"><img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=1100&auto=format&fit=crop&q=82" alt="Salon de l'institut"></div>
+    <div class="reveal">
+      <span class="eyebrow">L'institut</span>
+      <div class="sec-head" style="margin-bottom:14px"><h2>Une parenthèse, rien que pour vous</h2></div>
+      <p>Chez Lumière, le temps ralentit. On vous accueille avec un thé, on écoute ce dont vous avez envie, et on s'en occupe — du bout des doigts jusqu'à la dernière mèche.</p>
+      <p>Une équipe formée aux dernières techniques, des produits choisis avec soin, et une seule obsession : que vous repartiez en vous sentant belle, et bien.</p>
+      <div class="sign">— L'équipe Lumière</div>
+    </div>
+  </div></div>
+</section>
+
 <section class="presta" id="presta">
-  <div class="head reveal"><div class="k">Prestations</div><h2>Nos soins &amp; tarifs</h2></div>
-  <div class="tabs reveal">
-    <button class="tab on" data-t="coif">Coiffure</button>
-    <button class="tab" data-t="vis">Soins du visage</button>
-    <button class="tab" data-t="main">Mains &amp; pieds</button>
-  </div>
-  <div class="panel on" id="coif">
-    <div class="prow"><span class="nm">Coupe &amp; brushing<small>Diagnostic personnalisé inclus</small></span><span class="ds"></span><span class="pr">dès 65.–</span></div>
-    <div class="prow"><span class="nm">Couleur &amp; balayage<small>Soin repigmentant offert</small></span><span class="ds"></span><span class="pr">dès 110.–</span></div>
-    <div class="prow"><span class="nm">Coiffure d'événement<small>Mariage, cérémonie</small></span><span class="ds"></span><span class="pr">dès 95.–</span></div>
-  </div>
-  <div class="panel" id="vis">
-    <div class="prow"><span class="nm">Soin éclat<small>Nettoyage, gommage, hydratation</small></span><span class="ds"></span><span class="pr">dès 90.–</span></div>
-    <div class="prow"><span class="nm">Soin anti-âge<small>Lissant et raffermissant</small></span><span class="ds"></span><span class="pr">dès 120.–</span></div>
-    <div class="prow"><span class="nm">Soin express<small>30 minutes, effet bonne mine</small></span><span class="ds"></span><span class="pr">dès 55.–</span></div>
-  </div>
-  <div class="panel" id="main">
-    <div class="prow"><span class="nm">Manucure &amp; pose<small>Vernis semi-permanent</small></span><span class="ds"></span><span class="pr">dès 55.–</span></div>
-    <div class="prow"><span class="nm">Beauté des pieds<small>Soin complet &amp; vernis</small></span><span class="ds"></span><span class="pr">dès 65.–</span></div>
+  <div class="wrap">
+    <div class="sec-head c"><span class="eyebrow">Nos prestations</span><h2>Tout pour prendre soin de vous</h2><p>Choisissez une catégorie. Tarifs indicatifs, devis précis en cabine.</p></div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-c="coiffure">Coiffure</button>
+      <button class="tab" data-c="visage">Soins du visage</button>
+      <button class="tab" data-c="mains">Beauté des mains</button>
+      <button class="tab" data-c="maquillage">Maquillage</button>
+    </div>
+    <div class="plist" id="plist"></div>
   </div>
 </section>
 
-<section class="testi" id="testi">
-  <div class="k reveal">Elles en parlent</div>
-  <div class="tcar reveal" id="tcar">
-    <div class="slide on"><div class="stars">★★★★★</div><q>On ressort détendue et rayonnante. L'équipe prend vraiment le temps, c'est rare.</q><div class="who">Camille R. · cliente depuis 2 ans</div></div>
-    <div class="slide"><div class="stars">★★★★★</div><q>Le balayage le plus naturel que j'aie jamais eu. Je ne vais plus ailleurs.</q><div class="who">Sophie M.</div></div>
-    <div class="slide"><div class="stars">★★★★★</div><q>Un cocon. On oublie tout le temps d'un soin. Je recommande les yeux fermés.</q><div class="who">Laure D.</div></div>
+<section class="gal light" id="gal">
+  <div class="wrap">
+    <div class="sec-head c"><span class="eyebrow">Galerie</span><h2>L'art du détail</h2></div>
+    <div class="gal-grid">
+      <div class="g reveal"><img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=1100&auto=format&fit=crop&q=82" alt="Espace coiffure"></div>
+      <div class="g reveal"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1100&auto=format&fit=crop&q=82" alt="Soin du visage"></div>
+    </div>
   </div>
-  <div class="dots" id="dots"></div>
 </section>
 
-<section class="band" id="contact">
-  <span class="kicker" style="color:var(--rose);letter-spacing:.24em;text-transform:uppercase;font-size:.72rem">Contact</span>
-  <h2>Offrez-vous une pause</h2>
-  <div class="info">
-    <div><span>Horaires</span><b>Mar–Sam · 9h–18h30</b></div>
-    <div><span>Adresse</span><b>Rue du Lac 8, Valais</b></div>
-    <div><span>Réservation</span><b>+41 27 000 00 00</b></div>
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head c"><span class="eyebrow">Rendez-vous</span><h2>Offrez-vous un moment</h2></div>
+    <div class="reach">
+      <span>Adresse<br><b>Av. de la Beauté 5, Martigny</b></span>
+      <span>Horaires<br><b>Mar – Sam · 9h-19h</b></span>
+      <span>Réservation<br><b>contact@institut-lumiere.ch</b></span>
+    </div>
+    <a href="mailto:contact@institut-lumiere.ch" class="btn btn-rose" style="margin-top:32px">Réserver en ligne</a>
   </div>
-  <a href="#" class="btn">Prendre rendez-vous</a>
 </section>
 
-<footer>© 2026 Institut Lumière · Beauté &amp; Coiffure · Valais, Suisse</footer>
-<div class="tag-demo">Site de démonstration réalisé par <b>Horizon IA</b></div>
+<footer><div class="wrap">
+  <a href="#hero" class="brand">Institut <b>Lumière</b></a>
+  <div class="made">Site de démonstration réalisé par <a href="https://horizonia.ch">Horizon IA</a> — sites web modernes pour PME.</div>
+</div></footer>
 
 <script>
-addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('small',scrollY>40));
+const nav=document.getElementById('nav');addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+const burger=document.getElementById('burger'),links=document.getElementById('navlinks');
+burger.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*0.08)+'s';io.observe(el)});
-/* halo curseur */
-(function(){const g=document.getElementById('glow');let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
- addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY});
- (function l(){cx+=(x-cx)*.12;cy+=(y-cy)*.12;g.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)';requestAnimationFrame(l)})()})();
-/* onglets */
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));t.classList.add('on');
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));document.getElementById(t.dataset.t).classList.add('on');
-}));
-/* carrousel avis */
-(function(){const slides=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots');let i=0,timer;
- slides.forEach((s,k)=>{const d=document.createElement('button');d.className='dot'+(k?'':' on');d.addEventListener('click',()=>go(k));dots.appendChild(d)});
- const dl=[...dots.children];
- function go(k){slides[i].classList.remove('on');dl[i].classList.remove('on');i=k;slides[i].classList.add('on');dl[i].classList.add('on');reset()}
- function reset(){clearInterval(timer);timer=setInterval(()=>go((i+1)%slides.length),5000)}
- reset();
-})();
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const P={
+ coiffure:[['Coupe & brushing femme','Diagnostic, coupe, coiffage','55.–'],['Coupe homme','Coupe, finition','38.–'],['Couleur','Racines ou couleur complète','dès 65.–'],['Balayage / Ombré','Technique éclaircissante','dès 95.–'],['Soin profond','Kératine ou hydratation intense','35.–']],
+ visage:[['Soin éclat','Nettoyage, gommage, masque','75.–'],['Soin anti-âge','Lifting, fermeté, comblement','95.–'],['Soin hydratant','Réconfort des peaux sèches','70.–'],['Épilation visage','Sourcils, lèvre','dès 15.–']],
+ mains:[['Manucure classique','Soin, mise en forme, vernis','40.–'],['Vernis semi-permanent','Tenue 3 semaines','55.–'],['Pose de gel','Renfort & longueur','dès 75.–'],['Beauté des pieds','Soin complet & vernis','55.–']],
+ maquillage:[['Maquillage jour','Naturel, lumineux','45.–'],['Maquillage soirée','Intense, tenue longue durée','65.–'],['Maquillage mariée','Essai + jour J','dès 150.–'],['Cours d\'auto-maquillage','1h30, conseils personnalisés','90.–']]
+};
+const plist=document.getElementById('plist');
+function drawP(k){plist.innerHTML=P[k].map(x=>`<div class="pi"><div class="nm">${x[0]}<small>${x[1]}</small></div><div class="px">${x[2]}</div></div>`).join('');}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');drawP(t.dataset.c);}));
+drawP('coiffure');
+
+// ===== SIGNATURE 3D : orbe iridescent nacré qui se déforme =====
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const weak=innerWidth<820||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
+if(!reduce && !weak){
+ Promise.all([import('three'),import('three/addons/environments/RoomEnvironment.js')]).then(([THREE,RE])=>{
+  try{
+   const canvas=document.getElementById('c3d'),hero=document.getElementById('hero');
+   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+   const W=()=>innerWidth,H=()=>hero.clientHeight;renderer.setSize(W(),H());
+   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+   const scene=new THREE.Scene();
+   const pmrem=new THREE.PMREMGenerator(renderer);
+   scene.environment=pmrem.fromScene(new RE.RoomEnvironment(renderer),0.06).texture;
+   const camera=new THREE.PerspectiveCamera(45,W()/H(),0.1,100);camera.position.set(0,0,9);
+   const orbGroup=new THREE.Group();orbGroup.position.set(4.7,0.2,0);orbGroup.scale.setScalar(0.74);scene.add(orbGroup);
+   const geo=new THREE.IcosahedronGeometry(2.0,24);
+   const base=Float32Array.from(geo.attributes.position.array);
+   const baseN=Float32Array.from(geo.attributes.normal.array);
+   const mat=new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0.1,metalness:0,transmission:0.3,thickness:1.5,ior:1.4,iridescence:1,iridescenceIOR:1.9,iridescenceThicknessRange:[120,820],clearcoat:1,clearcoatRoughness:0.18,sheen:1,sheenColor:0xffd6e6,envMapIntensity:1.5});
+   const orb=new THREE.Mesh(geo,mat);orbGroup.add(orb);
+   const l1=new THREE.PointLight(0xffb6cf,44,40);l1.position.set(5,4,5);scene.add(l1);
+   const l2=new THREE.PointLight(0xa98cff,36,40);l2.position.set(-5,-2,3);scene.add(l2);
+   scene.add(new THREE.AmbientLight(0x6a5a72,0.5));
+   // particules douces
+   const Np=160,pg=new THREE.BufferGeometry(),pp=new Float32Array(Np*3);
+   for(let i=0;i<Np;i++){pp[i*3]=(Math.random()-.5)*16;pp[i*3+1]=(Math.random()-.5)*12;pp[i*3+2]=(Math.random()-.5)*8-1;}
+   pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+   const parts=new THREE.Points(pg,new THREE.PointsMaterial({color:0xf0c8d6,size:0.05,transparent:true,opacity:.55,depthWrite:false}));scene.add(parts);
+   let mx=0,my=0,cmx=0,cmy=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
+   const pos=geo.attributes.position;const v=new THREE.Vector3();
+   const clock=new THREE.Clock();let raf;
+   function loop(){raf=requestAnimationFrame(loop);const t=clock.getElapsedTime();
+     cmx+=(mx-cmx)*.05;cmy+=(my-cmy)*.05;
+     for(let i=0;i<pos.count;i++){
+       const bx=base[i*3],by=base[i*3+1],bz=base[i*3+2];
+       const n=Math.sin(bx*1.6+t*0.9)*0.5+Math.sin(by*1.7+t*0.7)*0.5+Math.sin(bz*1.5+t*1.1)*0.4+Math.sin((bx+by+bz)*1.2+t*0.5)*0.3;
+       const d=1+n*0.13*(1+cmx*0.6);
+       pos.setXYZ(i,bx*d,by*d,bz*d);
+     }
+     pos.needsUpdate=true;geo.computeVertexNormals();
+     orbGroup.rotation.y=t*0.25+cmx*0.8;orbGroup.rotation.x=cmy*0.4;orbGroup.position.y=0.2+Math.sin(t*0.7)*0.15;
+     parts.rotation.y=t*0.02;
+     const a=parts.geometry.attributes.position.array;for(let i=0;i<Np;i++){a[i*3+1]+=0.003;if(a[i*3+1]>6)a[i*3+1]=-6;}parts.geometry.attributes.position.needsUpdate=true;
+     const cxp=1.7+cmx*0.5;camera.position.x=cxp;camera.lookAt(cxp,0.2,0);
+     renderer.render(scene,camera);}
+   loop();
+   addEventListener('resize',()=>{renderer.setSize(W(),H());camera.aspect=W()/H();camera.updateProjectionMatrix();});
+   new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!raf)loop();}else{cancelAnimationFrame(raf);raf=0;}})).observe(hero);
+  }catch(e){console.warn('3D off',e);}
+ }).catch(()=>{});
+}
 </script>
 </body>
 </html>
