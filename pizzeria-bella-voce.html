@@ -3,16 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bella Voce — Pizzeria & restaurant · Les vraies saveurs d'Italie au feu de bois</title>
-<meta name="description" content="Pizzeria et restaurant italien. Pâte maturée 48h, four à bois, produits d'Italie. Comme à la maison, là-bas. Réservez votre table.">
+<title>Bella Voce — Pizzeria & trattoria · Les vraies saveurs d'Italie au feu de bois</title>
+<meta name="description" content="Pizzeria et trattoria. Pâte maturée 48h, four à bois, produits d'Italie. Comme à la maison, là-bas. Réservez votre table.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script type="importmap">
-{ "imports": {
-  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-}}
-</script>
 <style>
 :root{
   --esp:#1b1310;--esp2:#2a1d17;--tomato:#d6452f;--tomato-d:#b5341f;--basil:#6aa84f;
@@ -39,23 +33,26 @@ nav.scrolled{background:rgba(27,19,16,.92);backdrop-filter:blur(12px);padding:12
 .nav-links a{font-size:.86rem;color:#e6dccb;transition:.2s}.nav-links a:hover{color:var(--gold)}
 .burger{display:none;flex-direction:column;gap:5px;cursor:pointer}.burger span{width:25px;height:2px;background:var(--cream)}
 
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;z-index:0;background:
-  radial-gradient(46% 46% at 76% 50%,rgba(224,120,40,.18),transparent 62%),
-  radial-gradient(40% 40% at 70% 60%,rgba(214,69,47,.2),transparent 65%),
-  linear-gradient(160deg,#241712 0%,#1b1310 60%,#140d0a 100%);}
-.hero-bg::after{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1621538997517-58ce53933faa?w=1600&auto=format&fit=crop&q=80') center/cover;opacity:.1;mix-blend-mode:luminosity}
-#c3d{position:absolute;inset:0;z-index:1;width:100%;height:100%}
-.hero-in{position:relative;z-index:3;max-width:600px}
-.hero h1{font-size:clamp(2.9rem,6.4vw,5.2rem);margin:22px 0 20px}
+/* ---------- HERO : photo plein écran + léger Ken Burns ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;padding-bottom:8vh}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg::before{content:"";position:absolute;inset:-4%;background:url('https://images.unsplash.com/photo-1622880833523-7cf1c0bd4296?w=1900&auto=format&fit=crop&q=80') center/cover;animation:kenburns 22s ease-in-out infinite alternate}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,9,7,.86) 0%,rgba(15,9,7,.55) 42%,rgba(15,9,7,.18) 75%),linear-gradient(0deg,rgba(15,9,7,.92),transparent 55%)}
+@keyframes kenburns{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.13) translate(-1.5%,-1%)}}
+.hero-in{position:relative;z-index:3;max-width:640px}
+.hero h1{font-size:clamp(2.9rem,6.6vw,5.4rem);margin:20px 0 18px}
 .hero h1 em{font-style:italic;color:var(--gold)}
-.hero p{font-size:1.16rem;color:#ecdfca;max-width:470px;font-weight:300}
-.hero .btns{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
-.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:#cbb89c;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7}
+.hero p{font-size:1.16rem;color:#ecdfca;max-width:480px;font-weight:300}
+.hero .btns{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.scroll-hint{position:absolute;bottom:22px;right:30px;z-index:3;color:#cbb89c;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7;writing-mode:vertical-rl}
 
-.strip{background:var(--tomato);position:relative;z-index:4}
-.strip .wrap{display:flex;flex-wrap:wrap;justify-content:space-around;gap:18px;padding:22px 28px}
-.strip .it{color:#fff;font-weight:600;font-size:.96rem;display:flex;align-items:center;gap:9px;font-family:'DM Serif Display';font-style:italic}
+/* ---------- MARQUEE animé (signature) ---------- */
+.marquee{background:var(--tomato);position:relative;z-index:4;overflow:hidden;padding:18px 0;border-top:3px solid var(--gold);border-bottom:3px solid var(--gold)}
+.mq-track{display:flex;gap:0;width:max-content;animation:mq 26s linear infinite}
+.marquee:hover .mq-track{animation-play-state:paused}
+.mq-track span{font-family:'DM Serif Display';font-style:italic;color:#fff;font-size:1.15rem;padding:0 26px;white-space:nowrap;display:inline-flex;align-items:center;gap:26px}
+.mq-track span::after{content:"•";color:var(--gold);font-style:normal}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 section{padding:118px 0;position:relative}
 .sec-head{max-width:640px;margin-bottom:54px}.sec-head.c{margin:0 auto 56px;text-align:center}
@@ -64,31 +61,57 @@ section{padding:118px 0;position:relative}
 .light{background:var(--cream);color:var(--ink)}.light .sec-head p{color:var(--muted)}
 
 .maison .split{display:grid;grid-template-columns:1fr 1fr;gap:62px;align-items:center}
-.maison img{width:100%;height:560px;object-fit:cover;border-radius:6px}
+.maison .ph{position:relative;border-radius:6px;overflow:hidden}
+.maison img{width:100%;height:560px;object-fit:cover;transition:transform 1.2s ease}
+.maison .ph:hover img{transform:scale(1.05)}
+.maison .ph::after{content:"Famiglia Bella Voce dal 1998";position:absolute;left:18px;bottom:16px;font-family:'DM Serif Display';font-style:italic;color:#fff;font-size:.9rem;text-shadow:0 2px 12px rgba(0,0,0,.6)}
 .maison p+p{margin-top:16px;color:#5e5246}
 .sign{font-family:'DM Serif Display';font-style:italic;font-size:1.55rem;color:var(--tomato);margin-top:22px}
 
-.carte{background:linear-gradient(180deg,#1b1310,#241712)}
+/* ---------- SIGNATURE : carrousel horizontal scroll-snap des plats ---------- */
+.signatures{background:linear-gradient(180deg,#241712,#1b1310)}
+.sig-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+.sig-drag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
+.sig-scroll{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 0 22px;cursor:grab;scrollbar-width:none}
+.sig-scroll::-webkit-scrollbar{display:none}
+.sig-scroll.drag{cursor:grabbing}
+.dish{flex:0 0 auto;width:340px;scroll-snap-align:start;background:rgba(247,240,227,.04);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .3s,transform .4s}
+.dish:hover{border-color:rgba(224,162,60,.5);transform:translateY(-6px)}
+.dish .img{height:260px;overflow:hidden;position:relative}
+.dish .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.dish:hover .img img{transform:scale(1.07)}
+.dish .img .badge{position:absolute;top:14px;left:14px;background:var(--tomato);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:30px}
+.dish .body{padding:22px 24px 26px}
+.dish h3{font-size:1.5rem;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.dish h3 .px{font-size:1.2rem;color:var(--gold)}
+.dish .body p{font-size:.9rem;color:#b6a48d;margin-top:6px}
+
+.carte{background:#1b1310}
 .cat-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:44px}
 .cat{padding:11px 24px;border:1px solid var(--line);border-radius:40px;cursor:pointer;font-size:.86rem;color:#cbb89c;transition:.25s;background:none;font-weight:600}
 .cat:hover{border-color:var(--gold);color:var(--gold)}.cat.active{background:var(--tomato);border-color:var(--tomato);color:#fff}
 .menu{max-width:780px;margin:0 auto;display:grid;gap:6px}
-.mi{display:flex;justify-content:space-between;gap:18px;padding:17px 0;border-bottom:1px solid var(--line)}
+.mi{display:flex;justify-content:space-between;gap:18px;padding:17px 0;border-bottom:1px solid var(--line);animation:fadeUp .5s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .mi .nm{font-family:'DM Serif Display';font-size:1.25rem;color:var(--cream)}
 .mi .nm small{display:block;font-family:'Hanken Grotesk';font-size:.86rem;color:#a8967f;font-weight:300;margin-top:3px}
 .mi .px{font-family:'DM Serif Display';color:var(--gold);font-size:1.2rem;white-space:nowrap}
 .mi .tag{display:inline-block;font-family:'Hanken Grotesk';font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--basil);border:1px solid var(--basil);border-radius:20px;padding:1px 8px;margin-left:8px;font-weight:700;vertical-align:middle}
 
-.four{position:relative;color:var(--cream);text-align:center;min-height:540px;display:flex;align-items:center;
-  background:linear-gradient(rgba(20,13,10,.6),rgba(20,13,10,.72)),url('https://images.unsplash.com/photo-1579751626657-72bc17010498?w=1600&auto=format&fit=crop&q=80') center/cover fixed}
+.four{position:relative;color:var(--cream);text-align:center;min-height:560px;display:flex;align-items:center;
+  background:linear-gradient(rgba(20,13,10,.62),rgba(20,13,10,.74)),url('https://images.unsplash.com/photo-1564936281403-f92f66f89ee0?w=1700&auto=format&fit=crop&q=80') center/cover fixed}
 .four h2{font-size:clamp(2.2rem,5vw,3.6rem);max-width:720px;margin:18px auto 16px}
 .four p{max-width:560px;margin:0 auto 26px;color:#ecdfca;font-weight:300}
+.four .secs{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin:8px auto 30px;max-width:680px}
+.four .secs .v{font-family:'DM Serif Display';font-size:2.4rem;color:var(--gold)}
+.four .secs .k{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#cbb89c}
 
 .gal{background:var(--cream)}
-.gal-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
+.gal-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:16px;height:560px}
 .gal-grid .g{border-radius:8px;overflow:hidden;position:relative}
-.gal-grid .g img{width:100%;height:100%;object-fit:cover;transition:.6s;min-height:300px}
-.gal-grid .g:hover img{transform:scale(1.05)}
+.gal-grid .g:first-child{grid-row:1/3}
+.gal-grid .g img{width:100%;height:100%;object-fit:cover;transition:.7s}
+.gal-grid .g:hover img{transform:scale(1.06)}
 
 .contact{background:#140d0a;text-align:center}
 .contact .reach{display:flex;gap:44px;justify-content:center;flex-wrap:wrap;margin-top:30px;color:#cbb89c}
@@ -101,21 +124,24 @@ footer .made{margin-top:13px;font-size:.78rem;color:#6f5f50}footer .made a{color
 
 @media(max-width:900px){
   .nav-links{position:fixed;inset:0 0 0 auto;width:78%;max-width:320px;background:var(--esp2);flex-direction:column;justify-content:center;transform:translateX(100%);transition:.4s}.nav-links.open{transform:none}.burger{display:flex}
-  .maison .split,.gal-grid{grid-template-columns:1fr;gap:34px}.maison img{height:380px}.four{background-attachment:scroll}section{padding:82px 0}
+  .maison .split{grid-template-columns:1fr;gap:34px}.maison img{height:380px}
+  .four{background-attachment:scroll}section{padding:82px 0}
+  .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,180px);height:auto}.gal-grid .g:first-child{grid-row:auto;grid-column:1/3}
+  .hero-in{max-width:none}.scroll-hint{display:none}
 }
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}*{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.mq-track{animation:none}.hero-bg::before{animation:none}*{animation-duration:.001ms!important}}
 </style>
 </head>
 <body>
 <div class="demo-badge">Démo réalisée par <b>Horizon IA</b></div>
 <nav id="nav"><div class="wrap nav-in">
   <a href="#hero" class="brand">Bella <span>Voce</span></a>
-  <div class="nav-links" id="navlinks"><a href="#maison">La maison</a><a href="#carte">La carte</a><a href="#four">Le four</a><a href="#contact">Réserver</a></div>
+  <div class="nav-links" id="navlinks"><a href="#maison">La maison</a><a href="#signatures">Les signatures</a><a href="#carte">La carte</a><a href="#four">Le four</a><a href="#contact">Réserver</a></div>
   <div class="burger" id="burger"><span></span><span></span><span></span></div>
 </div></nav>
 
 <header class="hero" id="hero">
-  <div class="hero-bg"></div><canvas id="c3d"></canvas>
+  <div class="hero-bg"></div>
   <div class="wrap hero-in">
     <span class="eyebrow">Pizzeria · Trattoria · Feu de bois</span>
     <h1>Les vraies saveurs d'Italie, <em>comme là-bas</em>.</h1>
@@ -125,13 +151,15 @@ footer .made{margin-top:13px;font-size:.78rem;color:#6f5f50}footer .made a{color
   <div class="scroll-hint">Faire défiler</div>
 </header>
 
-<div class="strip"><div class="wrap">
-  <div class="it">🔥 Four à bois à 450°</div><div class="it">⏱ Pâte maturée 48h</div><div class="it">🇮🇹 Produits d'Italie</div><div class="it">🍃 Basilic frais chaque jour</div>
+<!-- MARQUEE signature -->
+<div class="marquee"><div class="mq-track" id="mq">
+  <span>Forno a legna</span><span>Pâte maturée 48h</span><span>Mozzarella di bufala</span><span>Prodotti italiani</span><span>Basilic frais</span><span>Fatto in casa</span>
+  <span>Forno a legna</span><span>Pâte maturée 48h</span><span>Mozzarella di bufala</span><span>Prodotti italiani</span><span>Basilic frais</span><span>Fatto in casa</span>
 </div></div>
 
 <section class="maison light" id="maison">
   <div class="wrap"><div class="split">
-    <div class="reveal"><img src="https://images.unsplash.com/photo-1579926545913-448d525562db?w=1100&auto=format&fit=crop&q=82" alt="Salle de la trattoria"></div>
+    <div class="reveal"><div class="ph"><img src="https://images.unsplash.com/photo-1574761136173-07e9d49b2a6f?w=1100&auto=format&fit=crop&q=82" alt="Salle de la trattoria"></div></div>
     <div class="reveal">
       <span class="eyebrow">La maison</span>
       <div class="sec-head" style="margin-bottom:14px"><h2>Comme à la maison, là-bas</h2></div>
@@ -142,9 +170,26 @@ footer .made{margin-top:13px;font-size:.78rem;color:#6f5f50}footer .made a{color
   </div></div>
 </section>
 
+<!-- SIGNATURE : carrousel des plats -->
+<section class="signatures" id="signatures">
+  <div class="wrap">
+    <div class="sig-top">
+      <div><span class="eyebrow">Les signatures</span><div class="sec-head" style="margin:14px 0 0"><h2>Les incontournables de la maison</h2></div></div>
+      <div class="sig-drag">Glissez pour parcourir <svg width="34" height="12" viewBox="0 0 34 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 6h32M27 1l5 5-5 5"/></svg></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="sig-scroll" id="sigScroll">
+    <div class="dish"><div class="img"><span class="badge">La classique</span><img src="https://images.unsplash.com/photo-1598023696416-0193a0bcd302?w=760&auto=format&fit=crop&q=80" alt="Margherita"></div><div class="body"><h3>Margherita <span class="px">16.–</span></h3><p>San Marzano, mozzarella fior di latte, basilic frais.</p></div></div>
+    <div class="dish"><div class="img"><img src="https://images.unsplash.com/photo-1564128442383-9201fcc740eb?w=760&auto=format&fit=crop&q=80" alt="Diavola"></div><div class="body"><h3>Diavola <span class="px">19.–</span></h3><p>Salami piquant, mozzarella, pointe de piment.</p></div></div>
+    <div class="dish"><div class="img"><span class="badge">Signature</span><img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=760&auto=format&fit=crop&q=80" alt="Bella Voce"></div><div class="body"><h3>Bella Voce <span class="px">23.–</span></h3><p>Burrata, jambon de Parme, roquette, tomates confites.</p></div></div>
+    <div class="dish"><div class="img"><img src="https://images.unsplash.com/photo-1611270629569-8b357cb88da9?w=760&auto=format&fit=crop&q=80" alt="Tagliatelle al ragù"></div><div class="body"><h3>Tagliatelle al ragù <span class="px">21.–</span></h3><p>Ragoût de bœuf mijoté 4 heures, tagliatelle fraîches.</p></div></div>
+    <div class="dish"><div class="img"><span class="badge">Maison</span><img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=760&auto=format&fit=crop&q=80" alt="Tiramisù"></div><div class="body"><h3>Tiramisù <span class="px">9.–</span></h3><p>Le vrai, au mascarpone et café, préparé chaque matin.</p></div></div>
+  </div></div>
+</section>
+
 <section class="carte" id="carte">
   <div class="wrap">
-    <div class="sec-head c"><span class="eyebrow">La carte</span><h2>Nos spécialités</h2><p>Une carte courte, qui change au gré du marché. Choisissez votre envie.</p></div>
+    <div class="sec-head c"><span class="eyebrow" style="justify-content:center">La carte</span><h2>Toute notre carte</h2><p>Une carte courte, qui change au gré du marché. Choisissez votre envie.</p></div>
     <div class="cat-tabs" id="cats">
       <button class="cat active" data-c="pizze">Pizze</button>
       <button class="cat" data-c="antipasti">Antipasti</button>
@@ -159,24 +204,30 @@ footer .made{margin-top:13px;font-size:.78rem;color:#6f5f50}footer .made a{color
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center">Le four à bois</span>
     <h2>90 secondes, et la magie opère</h2>
-    <p>Notre four en briques monte à 450°. La pâte gonfle, se cloque, prend ces taches de braise (le « leoparding ») que seul le feu de bois sait donner. C'est là toute la différence.</p>
+    <p>Notre four en briques monte à 450°. La pâte gonfle, se cloque, prend ces taches de braise (le « leoparding ») que seul le feu de bois sait donner.</p>
+    <div class="secs">
+      <div><div class="v">450°</div><div class="k">Température du four</div></div>
+      <div><div class="v">48h</div><div class="k">Maturation de la pâte</div></div>
+      <div><div class="v">90s</div><div class="k">De cuisson, pas plus</div></div>
+    </div>
     <a href="#contact" class="btn btn-tom">Réserver ma table</a>
   </div>
 </section>
 
 <section class="gal light">
   <div class="wrap">
-    <div class="sec-head c"><span class="eyebrow">L'ambiance</span><h2>Un coin d'Italie chez vous</h2></div>
+    <div class="sec-head c"><span class="eyebrow" style="justify-content:center">L'ambiance</span><h2>Un coin d'Italie chez vous</h2></div>
     <div class="gal-grid">
-      <div class="g reveal"><img src="https://images.unsplash.com/photo-1553342385-111fd6bc6ab3?w=1100&auto=format&fit=crop&q=82" alt="Terrasse italienne"></div>
-      <div class="g reveal"><img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?w=900&auto=format&fit=crop&q=82" alt="Pizza au four à bois"></div>
+      <div class="g reveal"><img src="https://images.unsplash.com/photo-1579926545913-448d525562db?w=1000&auto=format&fit=crop&q=82" alt="Intérieur chaleureux"></div>
+      <div class="g reveal"><img src="https://images.unsplash.com/photo-1606152196365-d1ce5ea838b5?w=800&auto=format&fit=crop&q=82" alt="Pizza au feu de bois"></div>
+      <div class="g reveal"><img src="https://images.unsplash.com/photo-1542282811-943ef1a977c3?w=800&auto=format&fit=crop&q=82" alt="Pizza rustique"></div>
     </div>
   </div>
 </section>
 
 <section class="contact" id="contact">
   <div class="wrap">
-    <div class="sec-head c"><span class="eyebrow">Réserver</span><h2>On vous garde une table ?</h2></div>
+    <div class="sec-head c"><span class="eyebrow" style="justify-content:center">Réserver</span><h2>On vous garde une table ?</h2></div>
     <div class="reach">
       <span>Adresse<br><b>Rue de l'Italie 7, Martigny</b></span>
       <span>Ouvert<br><b>Mar – Dim · midi & soir</b></span>
@@ -198,6 +249,7 @@ burger.addEventListener('click',()=>links.classList.toggle('open'));
 links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
 // carte filtrable
 const M={
  pizze:[['Margherita','San Marzano, mozzarella fior di latte, basilic','16.–','La classique'],['Napoli','Anchois, câpres, origan, ail','18.–'],['Diavola','Salami piquant, mozzarella, piment','19.–'],['Quattro Formaggi','Gorgonzola, parmesan, fontina, mozzarella','20.–'],['Bella Voce','Burrata, jambon de Parme, roquette, tomates confites','23.–','Signature']],
@@ -206,69 +258,16 @@ const M={
  dolci:[['Tiramisù','Le vrai, au mascarpone et café','9.–','Maison'],['Panna cotta','Vanille, coulis de fruits rouges','8.–'],['Cannoli siciliens','Ricotta, pistache, chocolat','9.–']]
 };
 const menu=document.getElementById('menu');
-function drawMenu(k){menu.innerHTML=M[k].map(x=>`<div class="mi"><div class="nm">${x[0]}${x[3]?`<span class="tag">${x[3]}</span>`:''}<small>${x[1]}</small></div><div class="px">${x[2]}</div></div>`).join('');}
+function drawMenu(k){menu.innerHTML=M[k].map((x,i)=>`<div class="mi" style="animation-delay:${i*.05}s"><div class="nm">${x[0]}${x[3]?`<span class="tag">${x[3]}</span>`:''}<small>${x[1]}</small></div><div class="px">${x[2]}</div></div>`).join('');}
 document.querySelectorAll('.cat').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));c.classList.add('active');drawMenu(c.dataset.c);}));
 drawMenu('pizze');
 
-// ===== SIGNATURE 3D : pizza au feu de bois qui tourne =====
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const weak=innerWidth<820||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
-if(!reduce && !weak){
- Promise.all([import('three'),import('three/addons/environments/RoomEnvironment.js')]).then(([THREE,RE])=>{
-  try{
-   const canvas=document.getElementById('c3d'),hero=document.getElementById('hero');
-   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-   const W=()=>innerWidth,H=()=>hero.clientHeight;renderer.setSize(W(),H());
-   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=0.86;
-   const scene=new THREE.Scene();
-   const pmrem=new THREE.PMREMGenerator(renderer);
-   scene.environment=pmrem.fromScene(new RE.RoomEnvironment(renderer),0.05).texture;
-   const camera=new THREE.PerspectiveCamera(40,W()/H(),0.1,100);camera.position.set(0,0,11);
-   const pizzaGroup=new THREE.Group();pizzaGroup.position.set(6.6,-0.3,0);pizzaGroup.scale.setScalar(0.5);pizzaGroup.rotation.x=-0.62;scene.add(pizzaGroup);
-   const spin=new THREE.Group();pizzaGroup.add(spin);
-   const EI=0.45;
-   const crustMat=new THREE.MeshStandardMaterial({color:0xc07f37,roughness:.85,envMapIntensity:EI});
-   const doughMat=new THREE.MeshStandardMaterial({color:0xd8a35a,roughness:.9,envMapIntensity:EI});
-   // dough (caché sous la sauce, sert de base + dessous du disque)
-   const dough=new THREE.Mesh(new THREE.CylinderGeometry(2.74,2.66,0.2,64),doughMat);spin.add(dough);
-   // sauce (couche visible, rouge vif, légèrement bombée)
-   const sauce=new THREE.Mesh(new THREE.SphereGeometry(2.5,64,32,0,Math.PI*2,0,Math.PI*0.5),new THREE.MeshStandardMaterial({color:0xcf2e14,roughness:.6,envMapIntensity:EI}));
-   sauce.scale.y=0.07;sauce.position.y=0.1;spin.add(sauce);
-   // crust torus
-   const crust=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.4,20,64),crustMat);crust.rotation.x=Math.PI/2;crust.position.y=0.08;spin.add(crust);
-   function place(n,r0,r1,fn){for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,rr=r0+Math.random()*(r1-r0);fn(Math.cos(a)*rr,Math.sin(a)*rr);}}
-   const mozMat=new THREE.MeshStandardMaterial({color:0xf0e7d0,roughness:.45,envMapIntensity:EI});
-   place(9,0.4,2.05,(x,z)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.24+Math.random()*0.08,16,12),mozMat);m.scale.y=0.55;m.position.set(x,0.22,z);spin.add(m);});
-   const salMat=new THREE.MeshStandardMaterial({color:0xbf3320,roughness:.5,envMapIntensity:EI});
-   place(11,0.5,2.0,(x,z)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(0.34,0.34,0.06,20),salMat);m.position.set(x,0.2,z);spin.add(m);});
-   const basMat=new THREE.MeshStandardMaterial({color:0x3f7d24,roughness:.55,envMapIntensity:EI});
-   place(11,0.4,2.05,(x,z)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.22,10,7),basMat);m.scale.set(1.5,0.2,0.85);m.rotation.y=Math.random()*3;m.position.set(x,0.26,z);spin.add(m);});
-   // lights : key + oven glow
-   const key=new THREE.DirectionalLight(0xffffff,2.6);key.position.set(2,9,7);scene.add(key);
-   const fill=new THREE.DirectionalLight(0xfff2e2,0.9);fill.position.set(-3,2,8);scene.add(fill);
-   const oven=new THREE.PointLight(0xff7a2a,7,30);oven.position.set(8,-2,2);scene.add(oven);
-   scene.add(new THREE.AmbientLight(0x9a8a78,0.35));
-   // vapeur
-   const N=90,pg=new THREE.BufferGeometry(),pp=new Float32Array(N*3);
-   for(let i=0;i<N;i++){pp[i*3]=3.0+(Math.random()-.5)*4;pp[i*3+1]=(Math.random())*5;pp[i*3+2]=(Math.random()-.5)*4;}
-   pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
-   const steam=new THREE.Points(pg,new THREE.PointsMaterial({color:0xffe9cf,size:0.07,transparent:true,opacity:.32,depthWrite:false}));scene.add(steam);
-   let mx=0,my=0,cmx=0,cmy=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
-   const clock=new THREE.Clock();let raf;
-   function loop(){raf=requestAnimationFrame(loop);const t=clock.getElapsedTime();
-     cmx+=(mx-cmx)*.05;cmy+=(my-cmy)*.05;
-     spin.rotation.y=t*0.5;
-     pizzaGroup.rotation.x=-0.62+cmy*0.26;pizzaGroup.rotation.z=cmx*0.28;pizzaGroup.position.y=-0.3+Math.sin(t*0.9)*0.1;
-     const a=steam.geometry.attributes.position.array;for(let i=0;i<N;i++){a[i*3+1]+=0.012;if(a[i*3+1]>5)a[i*3+1]=0;}steam.geometry.attributes.position.needsUpdate=true;
-     const cxp=3.5+cmx*0.5;camera.position.x=cxp;camera.lookAt(cxp,-0.3,0);
-     renderer.render(scene,camera);}
-   loop();
-   addEventListener('resize',()=>{renderer.setSize(W(),H());camera.aspect=W()/H();camera.updateProjectionMatrix();});
-   new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!raf)loop();}else{cancelAnimationFrame(raf);raf=0;}})).observe(hero);
-  }catch(e){console.warn('3D off',e);}
- }).catch(()=>{});
-}
+// carrousel : glisser à la souris
+(function(){const s=document.getElementById('sigScroll');let down=false,sx,sl;
+ s.addEventListener('pointerdown',e=>{down=true;s.classList.add('drag');sx=e.clientX;sl=s.scrollLeft;});
+ addEventListener('pointerup',()=>{down=false;s.classList.remove('drag');});
+ addEventListener('pointermove',e=>{if(!down)return;s.scrollLeft=sl-(e.clientX-sx);});
+})();
 </script>
 </body>
 </html>
